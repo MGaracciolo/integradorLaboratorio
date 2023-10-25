@@ -10,7 +10,7 @@ const botonExamenes= document.getElementById('botonExamenes');
 
 botonInicio.addEventListener('click', function () {
   
-    window.location.href = "/index"; // Reemplazar '/rutaPantallaPrincipal' con la URL correcta.
+    window.location.href = "/index"; 
 });
 
 botonExamenes.addEventListener('click', function () {
@@ -27,36 +27,5 @@ botonNuevoPacienteInicio.addEventListener('click', function () {
   
 });
 
-
-
-/*
-const botonBuscar = document.getElementById('botonBuscar');
-
-botonBuscar.addEventListener('click', function () {
-  const busqueda = document.getElementById('busquedaPaciente').value;
-
-  $.get(`/rutaPaciente/buscar?busqueda=${busqueda}`, function (data) {
-    $('#tablaResultados tbody').empty();
-
-    data.pacientes.forEach(function (paciente) {
-      $('#tablaResultados tbody').append(`
-        <tr>
-          <td>${paciente.nombre}</td>
-          <td>${paciente.apellido}</td>
-          <td>${paciente.dni}</td>
-          <td>${paciente.email}</td>
-          <td>${paciente.fechaNacimiento}</td>
-          <td>${paciente.sexo}</td>
-          <td>${paciente.edad}</td>
-          <td>${paciente.obraSocial}</td>
-          <td>${paciente.numeroAfiliado}</td>
-          <td>${paciente.telefono}</td>
-          <td>${paciente.ciudad}</td>
-        </tr>
-      `);
-    });
-  });
-});
-*/
 
 
