@@ -1,0 +1,83 @@
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title TreeLabWM
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    
+  body
+    #cabecera
+      img(src='/images/banner.png', alt='Logo del laboratorio')
+    #botones
+      button#botonAgregarPaciente.custom-button Agregar Paciente
+      button#botonBuscarPaciente.custom-button Buscar Paciente
+      button#botonExamenes.custom-button Exámenes      
+      button.custom-button Orden de Trabajo 
+      button#botonInicio.custom-button Inicio    
+      button.custom-button Salir
+
+    h1 Búsqueda de Pacientes
+    form(action='/rutaPaciente/buscar', method='GET')
+      p Ingrese nombre, DNI o apellido del paciente:
+      input(style: center, type='text', name='busqueda', id='busquedaPaciente', placeholder='Ingrese el nombre/apellido/DNI del paciente')
+      button(type='submit', id='botonBuscar') Buscar 
+
+    
+
+    button#guardarCambios(style='display:none') Guardar cambios
+    //button#botonNuevoPacienteInicio.custom-button(style='display: none;') Nuevo Paciente
+
+    button#botonNuevoPacienteInicio.custom-button(style= noResult ? 'display: block;' : 'display: none;') Nuevo Paciente
+    //button#botonNuevoPacienteInicio Nuevo Paciente
+    #contenedorPADRE_NUEVOPACIENTE(style='display: none;')
+      #contenedorh3
+        h3 INGRESAR NUEVO PACIENTE
+      #cuadrado
+      #contenedorformularioPaciente
+        form#formularioPaciente(style='display: none;', action='/rutaPaciente/agregarPaciente', method='post')
+          p
+            | Nombre:
+            input(type='text', name='nombre', placeholder='Ingrese el nombre del paciente')
+          p
+            | Apellido:
+            input(type='text', name='apellido', placeholder='Ingrese el apellido del paciente')
+          p
+            | Email:
+            input(type='text', name='email', placeholder='Ingrese el email del paciente')
+          p
+            | Fecha de nacimiento:
+            input(type='date', name='fechaNacimiento', placeholder='Ingrese la fecha de nacimiento del paciente')
+          p
+            | Sexo:
+            select(name='sexo')
+              option(value='masculino') Masculino
+              option(value='femenino') Femenino
+              option(value='otros') Otros
+          p
+            | Edad:
+            input(type='text', name='edad', placeholder='Ingrese la edad del paciente')
+          p
+            | DNI:
+            input(type='text', name='dni', placeholder='Ingrese el DNI del paciente')
+          p
+            | Obra Social:
+            input(type='text', name='obraSocial', placeholder='Ingrese la obra social del paciente')
+          p
+            | Número de afiliado:
+            input(type='text', name='numeroAfiliado', placeholder='Ingrese el número de afiliado del paciente')
+          p
+            | Teléfono:
+            input(type='text', name='telefono', placeholder='Ingrese el número de teléfono del paciente')
+          p
+            | Ciudad:
+            input(type='text', name='ciudad', placeholder='Ingrese ciudad del paciente')
+          button#botonAgregarNuevoPaciente(type='submit') Agregar Nuevo Paciente
+
+    footer#footer
+      p Rivadavia 548, San Luis, Argentina
+      p Teléfono: 266 4000000
+      p Email: labwm@gmail.com
+      p &copy; 2023 TreeLabWM
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    script(src='/javascripts/lab.js')
