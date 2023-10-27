@@ -12,8 +12,7 @@ html(lang='es')
     #botones
       button#botonAgregarPaciente.custom-button Agregar Paciente
       button#botonBuscarPaciente.custom-button Buscar Paciente
-      button#botonExamenes.custom-button Exámenes      
-      button.custom-button Orden de Trabajo 
+      button#botonExamenes.custom-button Exámenes           
       button#botonInicio.custom-button Inicio    
       button.custom-button Salir
 
@@ -47,25 +46,29 @@ html(lang='es')
             input(type='text', name='email', placeholder='Ingrese el email del paciente')
           p
             | Fecha de nacimiento:
-            input(type='date', name='fechaNacimiento', placeholder='Ingrese la fecha de nacimiento del paciente')
+            input(type='date', name='fecha_nacimiento', placeholder='Ingrese la fecha de nacimiento del paciente' )
           p
             | Sexo:
             select(name='sexo')
-              option(value='masculino') Masculino
-              option(value='femenino') Femenino
-              option(value='otros') Otros
-          p
-            | Edad:
-            input(type='text', name='edad', placeholder='Ingrese la edad del paciente')
+              option(value='1') Masculino
+              option(value='2') Femenino
+              option(value='3') Otros
+          p 
+            | Embarazada:
+            input(type="checkbox", id="embarazadaSi", name="embarazadaSi", value="si")
+            label(for="embarazadaSi") si
+            input(type="checkbox", id="embarazadaNo", name="embarazadaNo", value="no")
+            label(for="embarazadaNo") no 
+            // El atributo "for" debe ser igual al "id"       
           p
             | DNI:
             input(type='text', name='dni', placeholder='Ingrese el DNI del paciente')
           p
             | Obra Social:
-            input(type='text', name='obraSocial', placeholder='Ingrese la obra social del paciente')
+            input(type='text', name='obra_social', placeholder='Ingrese la obra social del paciente')
           p
             | Número de afiliado:
-            input(type='text', name='numeroAfiliado', placeholder='Ingrese el número de afiliado del paciente')
+            input(type='text', name='numero_afiliado', placeholder='Ingrese el número de afiliado del paciente')
           p
             | Teléfono:
             input(type='text', name='telefono', placeholder='Ingrese el número de teléfono del paciente')

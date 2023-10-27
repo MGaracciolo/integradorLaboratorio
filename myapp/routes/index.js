@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { User } = require("../models/").Paciente;
+const { User } = require("../models/").paciente;
 const bodyParser = require('body-parser');
 const {Op} = require('sequelize');
 
