@@ -1,4 +1,4 @@
-
+//app.js
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -6,11 +6,55 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+const { Sequelize } = require('sequelize');
+const config = require('./config/config.json');
+const fs = require('fs');
+
+const sequelize = new Sequelize(config.development.database, config.development.username, config.development.password, {
+  host: config.development.host,
+  dialect: config.development.dialect,
+});
+
+// Carga todos los modelos desde la carpeta "models"
+const modelsPath = path.join(__dirname, 'models');
+const models = [];
+
+fs.readdirSync(modelsPath).forEach((file) => {
+  if (file.endsWith('.js')) {
+    const model = require(path.join(modelsPath, file));
+    models.push(model);
+  }
+});
+
+(async () => {
+  try {
+    await sequelize.sync({ force: false });
+    console.log('Base de datos sincronizada correctamente');
+  } catch (error) {
+    console.error('Error al sincronizar la base de datos:', error);
+  }
+})();
+
+
+
+
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const rutaPacienteRouter = require('./routes/rutaPaciente');
 const rutaExamenesRouter = require('./routes/rutaExamenes');
 const app = express();
+
+
+
+
+
+
+
+
+
+
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

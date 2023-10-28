@@ -2,32 +2,37 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class paciente extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
     }
   }
+
   paciente.init({
+    id_paciente: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    dni:DataTypes.INTEGER,     
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,
-    email: DataTypes.STRING,
-    fecha_nacimiento: DataTypes.DATEONLY,
-    sexo: DataTypes.INTEGER,
-    embarazada: DataTypes.STRING,
-    dni: DataTypes.INTEGER,
-    obra_social: DataTypes.STRING,
+    fecha_nacimiento:DataTypes.DATE,
+    id_obra_social: DataTypes.INTEGER,
     numero_afiliado: DataTypes.INTEGER,
     telefono: DataTypes.INTEGER,
-    ciudad: DataTypes.STRING
+    id_sexo: DataTypes.INTEGER,
+    id_direccion: DataTypes.INTEGER,
+    id_user: DataTypes.INTEGER,
+    
   }, {
     sequelize,
     modelName: 'paciente',
+    tableName: 'paciente', // Esto define el nombre de la tabla en la base de datos
   });
+
   return paciente;
 };

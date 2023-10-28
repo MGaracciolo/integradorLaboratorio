@@ -8,13 +8,16 @@ const {
   Op
 } = require('sequelize');
 const path = require('path');
+//const paciente2 = require('../models');
 // Configurar el middleware 'method-override' para usar el put
 
-
+console.log('Antes de la consulta SQL');
 router.get('/buscar', async (req, res) => {
+
   try {
     const busqueda = req.query.busqueda;
     const pacientes = await paciente.findAll({
+      attributes: ['id_paciente', 'dni', 'nombre', 'apellido', 'fecha_nacimiento', 'id_obra_social', 'numero_afiliado', 'telefono', 'id_sexo', 'id_direccion', 'id_user'],
       where: {
         [Op.or]: [{
             nombre: {
@@ -34,6 +37,7 @@ router.get('/buscar', async (req, res) => {
         ],
       },
     });
+    
 
     if (pacientes.length === 0) {
       res.render('index', {
