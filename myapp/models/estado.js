@@ -5,8 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class estado extends Model {
     static associate(models) {
-      estado.hasMany(orden,{
-        foreingkey:'id_estado'
+      const orden = models.orden;
+      estado.hasMany(orden, {
+        foreingkey: 'id_estado'
       })
     }
   }

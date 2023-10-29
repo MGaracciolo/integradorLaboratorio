@@ -5,6 +5,8 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class obra_social extends Model {
     static associate(models) {
+      const paciente = models.paciente;
+      
       obra_social.hasMany(paciente,{
         foreingkey:'id_obra_social'
       });

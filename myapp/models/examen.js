@@ -5,6 +5,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class examen extends Model {
     static associate(models) {
+      const tipo_examen = models.tipo_examen;
+      const orden = models.orden;
+      const empleado = models.empleado;
+      const valor = models.valor;
+      
       examen.belongsTo(tipo_examen,{
         foreignKey:'id_tipo'
       });

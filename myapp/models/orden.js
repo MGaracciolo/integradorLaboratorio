@@ -5,6 +5,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class orden extends Model {
     static associate(models) {
+      const paciente = models.paciente;
+      const examen = models.examen;
+      const estado = models.estado;
+      const muestra = models.muestra;
+      
       orden.belongsTo(estado,{
         foreingkey:'id_estado'
       });

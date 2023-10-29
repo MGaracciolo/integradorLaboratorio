@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            referencia.hasMany(determinacion,{
-                foreignKey:'id_referencia'
+            const determinacion = models.determinacion;
+            referencia.hasMany(determinacion, {
+                foreignKey: 'id_referencia'
             });
         }
     }
@@ -22,14 +23,14 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true, // Esto define el campo como clave primaria
             autoIncrement: true, // Opcional, si el ID es autoincremental
         },
-        edad_max:DataTypes.INTEGER,
-        edad_min:DataTypes.INTEGER,
+        edad_max: DataTypes.INTEGER,
+        edad_min: DataTypes.INTEGER,
         id_sexo: DataTypes.INTEGER,
-        minimo:DataTypes.FLOAT,
-        maximo:DataTypes.FLOAT,
-        patologia:DataTypes.STRING,
-        observacion:DataTypes.STRING,
-        estado:DataTypes.BOOLEAN
+        minimo: DataTypes.FLOAT,
+        maximo: DataTypes.FLOAT,
+        patologia: DataTypes.STRING,
+        observacion: DataTypes.STRING,
+        estado: DataTypes.BOOLEAN
         // Agrega otros campos según tus necesidades
     }, {
         sequelize,

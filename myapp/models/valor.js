@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
   class valor extends Model {
     
     static associate(models) {
+        const examen = models.examen;
+        const determinacion = models.determinacion;
+        
         valor.belongsTo(examen,{
             foreingkey:'id_examen'
         });

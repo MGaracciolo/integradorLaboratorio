@@ -5,14 +5,18 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class empleado extends Model {
     static associate(models) {
-      empleado.belongsTo(departamento,{
-        foreignKey:'id_departamento'
+      const departamento = models.departamento; 
+      const user = models.user;
+      const examen = models.examen;
+
+      empleado.belongsTo(departamento, {
+        foreignKey: 'id_departamento'
       });
-      empleado.belongsTo(user,{
-        foreingkey:'id_user'
+      empleado.belongsTo(user, {
+        foreingkey: 'id_user'
       });
-      empleado.hasMany(examen,{
-        foreingkey:'id_empleado'
+      empleado.hasMany(examen, {
+        foreingkey: 'id_empleado'
       });
     }
   }

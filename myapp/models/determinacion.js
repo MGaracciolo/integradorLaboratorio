@@ -5,14 +5,18 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class determinacion extends Model {
     static associate(models) {
-      determinacion.belongsTo(unidad_medida,{
-        foreingkey:'id_unidad_medida'
+      const unidad_medida = models.unidad_medida;
+      const referencia = models.referencia;
+      const valor = models.valor;
+
+      determinacion.belongsTo(unidad_medida, {
+        foreignKey: 'id_unidad_medida'
       });
-      determinacion.belongsTo(referencia,{
-        foreingkey:'id_referencia'
+      determinacion.belongsTo(referencia, {
+        foreignKey: 'id_referencia'
       });
-      determinacion.hasMany(valor,{
-        foreingkey:'id_determinacion'
+      determinacion.hasMany(valor, {
+        foreignKey: 'id_determinacion'
       });
     }
   }
@@ -20,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     id_determinacion: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true, // Esto define el campo como clave primaria
-      autoIncrement: true, // Opcional, si el ID es autoincremental
+      primaryKey: true,
+      autoIncrement: true,
     },
     nombre: DataTypes.STRING,
     estado: DataTypes.BOOLEAN,

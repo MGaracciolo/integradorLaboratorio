@@ -4,6 +4,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class muestra extends Model {
     static associate(models) {
+      const tipo_muestra = models.tipo_muestra;
+      const orden = models.orden;
+      
       muestra.belongsTo(tipo_muestra,{
         foreingkey:'id_tipo_muestra'
       });

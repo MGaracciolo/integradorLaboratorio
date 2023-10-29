@@ -2,11 +2,14 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class direccion extends Model {
     static associate(models) {
-      direccion.hasMany(paciente,{
-        foreignKey:'id_direccion'
+      const paciente = models.paciente;
+
+      direccion.hasMany(paciente, {
+        foreignKey: 'id_direccion'
       });
     }
   }
@@ -14,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     id_direccion: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true, // Esto define el campo como clave primaria
-      autoIncrement: true, // Opcional, si el ID es autoincremental
+      primaryKey: true,
+      autoIncrement: true,
     },
     calle: DataTypes.STRING,
     numero: DataTypes.INTEGER,

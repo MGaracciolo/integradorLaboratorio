@@ -3,9 +3,16 @@ const {
   Model
 } = require('sequelize');
 
+
 module.exports = (sequelize, DataTypes) => {
   class paciente extends Model {
     static associate(models) {
+      const orden = models.orden;
+      const obra_social = models.obra_social;
+      const direccion = models.direccion;
+      const user = models.user;
+      const sexo = models.sexo;
+      
       paciente.hasMany(orden,{
         foreignKey:'id_paciente'
       });
