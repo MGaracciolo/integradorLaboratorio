@@ -59,32 +59,30 @@ router.get('/buscar', async (req, res) => {
 //ruta para agregar un nuevo paciente
 router.post('/agregarPaciente', async (req, res, next) => {
   const {
+    dni,
     nombre,
     apellido,
-    email,
     fecha_nacimiento,
-    sexo,
-    embarazada,
-    dni,
-    obra_social,
+    id_obra_social,
     numero_afiliado,
     telefono,
-    ciudad
+    id_sexo,
+    id_direccion,
+    id_user
   } = req.body;
 
   try {
     const nuevoPaciente = await paciente.create({
+      dni,
       nombre,
       apellido,
-      email,
       fecha_nacimiento,
-      sexo,
-      embarazada,
-      dni,
-      obra_social,
-      telefono,
+      id_obra_social,
       numero_afiliado,
-      ciudad,
+      telefono,
+      id_sexo,
+      id_direccion,
+      id_user
     });
 
     if (nuevoPaciente) {
@@ -109,32 +107,30 @@ router.post('/actualizarPaciente/:id', async (req, res) => {
   console.log('esta entrando');
   const pacienteId = req.params.id;
   const {
+    dni,
     nombre,
     apellido,
-    email,
-    fechaNacimiento,
-    sexo,
-    embarazada,
-    dni,
-    obraSocial,
-    numeroAfiliado,
+    fecha_nacimiento,
+    id_obra_social,
+    numero_afiliado,
     telefono,
-    ciudad
+    id_sexo,
+    id_direccion,
+    id_user
   } = req.body;
 
   try {
     const pacienteActualizado = await paciente.update({
+      dni,
       nombre,
       apellido,
-      email,
-      fecha_nacimiento: fechaNacimiento,
-      sexo,
-      embarazada,
-      dni,
-      obra_social: obraSocial,
-      numero_afiliado: numeroAfiliado,
+      fecha_nacimiento,
+      id_obra_social,
+      numero_afiliado,
       telefono,
-      ciudad,
+      id_sexo,
+      id_direccion,
+      id_user
     }, {
       where: {
         id: pacienteId

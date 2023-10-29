@@ -26,32 +26,30 @@ html(lang='es')
       h2 Pacientes
       thead
         tr
+          th DNI
           th Nombre
           th Apellido
-          th DNI
-          th Email
           th Fecha de Nacimiento
-          th Sexo
-          th Embarazada
           th Obra Social
           th Número de Afiliado
           th Teléfono
-          th Ciudad
+          th Sexo
+          th Direccion
+          th User
           th Acciones
       tbody
         each paciente in pacientes
           tr
+            td= paciente.dni
             td= paciente.nombre
             td= paciente.apellido
-            td= paciente.dni
-            td= paciente.email
-            td= paciente.fechanacimiento
-            td= paciente.sexo
-            td= paciente.embarazada
-            td= paciente.obraSocial
-            td= paciente.numeroAfiliado
+            td= paciente.fecha_nacimiento
+            td= paciente.obra_social
+            td= paciente.numero_afiliado
             td= paciente.telefono
-            td= paciente.ciudad
+            td= paciente.id_sexo
+            td= paciente.id_direccion
+            td= paciente.id_user
             td
                 button(type='button', class='custom-button editar-button', data-id=paciente.id_paciente) Editar
 
@@ -62,6 +60,9 @@ html(lang='es')
   each paciente in pacientes
     #editarPaciente(data-id=paciente.id)
     form(action=`/rutaPaciente/actualizarPaciente/${paciente.id}`, method='POST')
+      p     
+        | DNI:
+        input(type='text', name='dni', placeholder='DNI', value=paciente.dni)
       p
         | Nombre:
         input(type='text', name='nombre', placeholder='Nombre', value=paciente.nombre)
@@ -69,38 +70,27 @@ html(lang='es')
         | Apellido:
         input(type='text', name='apellido', placeholder='Apellido', value=paciente.apellido)
       p
-        | Email:
-        input(type='text', name='email', placeholder='Email', value=paciente.email)
-      p
         | Fecha de nacimiento:
-        input(type='date', name='fechaNacimiento', placeholder='Fecha de nacimiento', value=paciente.fechaNacimiento)
-      p
-        | Sexo:
-        select(name='sexo')
-          option(value='masculino', selected=paciente.sexo === 'masculino') Masculino
-          option(value='femenino', selected=paciente.sexo === 'femenino') Femenino
-          option(value='otros', selected=paciente.sexo === 'otros') Otros
-      p 
-        | Embarazada 
-        input(type="checkbox", id="embarazadaSi", name="embarazadaSi", value="si")
-        label(for="embarazadaSi") si
-        input(type="checkbox", id="embarazadaNo", name="embarazadaNo", value="no")
-        label(for="embarazadaNo") no  
-      p     
-        | DNI:
-        input(type='text', name='dni', placeholder='DNI', value=paciente.dni)
+        input(type='date', name='fecha_nacimiento', placeholder='Fecha de nacimiento', value=paciente.fecha_nacimiento)
       p
         | Obra Social:
-        input(type='text', name='obraSocial', placeholder='Obra Social', value=paciente.obraSocial)
+        input(type='text', name='id_obra_social', placeholder='Obra Social', value=paciente.id_obra_social)
       p
         | Número de afiliado:
-        input(type='text', name='numeroAfiliado', placeholder='Número de afiliado', value=paciente.numeroAfiliado)
+        input(type='text', name='numero_afiliado', placeholder='Número de afiliado', value=paciente.numero_afiliado)
       p
         | Teléfono:
         input(type='text', name='telefono', placeholder='Teléfono', value=paciente.telefono)
       p
-        | Ciudad:
-        input(type='text', name='ciudad', placeholder='Ciudad', value=paciente.ciudad)
+        | Sexo:
+        input(type='text', name='id_sexo', placeholder='Sexo', value=paciente.id_sexo)
+      p
+        | Direccion:
+        input(type='text', name='id_direccion', placeholder='Direccion', value=paciente.id_direccion)
+      p
+        | User:
+        input(type='text', name='id_user', placeholder='User', value=paciente.id_user)
+      
       button(type='submit', class='custom-button guardar-button', data-id=paciente.id) Guardar Cambios
 
       //button(type='submit', class='custom-button guardar-button', data-id=paciente.id) Guardar Cambios

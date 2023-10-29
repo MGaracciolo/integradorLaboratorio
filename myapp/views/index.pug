@@ -36,36 +36,20 @@ html(lang='es')
       #contenedorformularioPaciente
         form#formularioPaciente(style='display: none;', action='/rutaPaciente/agregarPaciente', method='post')
           p
+            | DNI:
+            input(type='text', name='dni', placeholder='Ingrese el DNI del paciente')
+          p
             | Nombre:
             input(type='text', name='nombre', placeholder='Ingrese el nombre del paciente')
           p
             | Apellido:
             input(type='text', name='apellido', placeholder='Ingrese el apellido del paciente')
           p
-            | Email:
-            input(type='text', name='email', placeholder='Ingrese el email del paciente')
-          p
             | Fecha de nacimiento:
             input(type='date', name='fecha_nacimiento', placeholder='Ingrese la fecha de nacimiento del paciente' )
           p
-            | Sexo:
-            select(name='sexo')
-              option(value='1') Masculino
-              option(value='2') Femenino
-              option(value='3') Otros
-          p 
-            | Embarazada:
-            input(type="checkbox", id="embarazadaSi", name="embarazadaSi", value="si")
-            label(for="embarazadaSi") si
-            input(type="checkbox", id="embarazadaNo", name="embarazadaNo", value="no")
-            label(for="embarazadaNo") no 
-            // El atributo "for" debe ser igual al "id"       
-          p
-            | DNI:
-            input(type='text', name='dni', placeholder='Ingrese el DNI del paciente')
-          p
             | Obra Social:
-            input(type='text', name='obra_social', placeholder='Ingrese la obra social del paciente')
+            input(type='text', name='id_obra_social', placeholder='Ingrese la obra social del paciente')
           p
             | Número de afiliado:
             input(type='text', name='numero_afiliado', placeholder='Ingrese el número de afiliado del paciente')
@@ -73,8 +57,14 @@ html(lang='es')
             | Teléfono:
             input(type='text', name='telefono', placeholder='Ingrese el número de teléfono del paciente')
           p
-            | Ciudad:
-            input(type='text', name='ciudad', placeholder='Ingrese ciudad del paciente')
+            | Sexo:
+            input(type='text', name='id_sexo', placeholder='Ingrese el número de sexo del paciente')
+          p
+            | Direccion:
+            input(type='text', name='id_direccion', placeholder='Ingrese la direccion del paciente')
+          p
+            | User:
+            input(type='text', name='id_user', placeholder='Ingrese la direccion del paciente')
           button#botonAgregarNuevoPaciente(type='submit') Agregar Nuevo Paciente
 
     footer#footer

@@ -16,21 +16,39 @@ router.get('/', function (req, res, next) {
 router.post('/paciente', async (req, res) => {
   try {
     // Obtén los datos del paciente desde la solicitud (req.body)
-    const { nombre, apellido, telefono, dni, fechaNacimiento, sexo, edad, obraSocial, numeroAfiliado, ciudad } = req.body;
-    console.log('Datos del paciente:', nombre, apellido, telefono, dni, fechaNacimiento, sexo, edad, obraSocial, numeroAfiliado, ciudad);
+    const { dni,
+      nombre,
+      apellido,
+      fecha_nacimiento,
+      id_obra_social,
+      numero_afiliado,
+      telefono,
+      id_sexo,
+      id_direccion,
+      id_user} = req.body;
+    console.log('Datos del paciente:', dni,
+    nombre,
+    apellido,
+    fecha_nacimiento,
+    id_obra_social,
+    numero_afiliado,
+    telefono,
+    id_sexo,
+    id_direccion,
+    id_user);
 
     // Crea un nuevo registro de paciente en la base de datos
     const nuevoPaciente = await User.create({ // Cambiado de paciente.create a User.create
+      dni,
       nombre,
       apellido,
+      fecha_nacimiento,
+      id_obra_social,
+      numero_afiliado,
       telefono,
-      dni,
-      fecha_nacimiento: fechaNacimiento,
-      sexo,
-      edad,
-      obra_social: obraSocial,
-      numero_afiliado: numeroAfiliado,
-      ciudad,
+      id_sexo,
+      id_direccion,
+      id_user
     });
 
     // Devuelve una respuesta exitosa

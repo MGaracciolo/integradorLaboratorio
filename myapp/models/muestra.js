@@ -1,24 +1,29 @@
-'use strict';
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class muestra extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      muestra.belongsTo(tipo_muestra,{
+        foreingkey:'id_tipo_muestra'
+      });
+      muestra.belongsTo(orden,{
+        foreingkey:'id_orden'
+      });
     }
   }
   muestra.init({
-    fecharecoleccion: DataTypes.DATE,
-    horaRecoleccion: DataTypes.TIME,
-    tipoMuestra: DataTypes.STRING,
-    precedencia: DataTypes.INTEGER,
-    id_Orden: DataTypes.INTEGER
+    id_muestra: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true, // Esto define el campo como clave primaria
+      autoIncrement: true, // Opcional, si el ID es autoincremental
+    },
+    fecha_recoleccion: DataTypes.DATEONLY,
+    hora_recoleccion: DataTypes.TIME,
+    id_tipo_muestra: DataTypes.INTEGER,
+    precedencia: DataTypes.STRING,
+    id_orden: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'muestra',

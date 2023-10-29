@@ -6,7 +6,21 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class paciente extends Model {
     static associate(models) {
-      // define association here
+      paciente.hasMany(orden,{
+        foreignKey:'id_paciente'
+      });
+      paciente.belongsTo(obra_social,{
+        foreignKey:'id_obra_social'
+      });
+      paciente.belongsTo(direccion,{
+        foreignKey:'id_direccion'
+      });
+      paciente.belongsTo(user,{
+        foreignKey:'id_user'
+      });
+      paciente.belongsTo(sexo,{
+        foreignKey:'id_sexo'
+      });
     }
   }
 
