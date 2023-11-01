@@ -5,7 +5,7 @@ const botonBuscarPaciente2 = document.getElementById('botonBuscarPaciente2');
 const botonPacienteInicio = document.getElementById('NuevoPacienteInicio');
 const botonInicio = document.getElementById('botonInicio');
 const botonExamenes= document.getElementById('botonExamenes');
-
+ 
 
 
 botonInicio.addEventListener('click', function () {
