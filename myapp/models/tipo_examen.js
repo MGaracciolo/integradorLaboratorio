@@ -7,13 +7,21 @@ module.exports = (sequelize, DataTypes) => {
   class tipo_examen extends Model {
 
     static associate(models) {
+      const tipo_muestra = models.tipo_muestra;
       const examen = models.examen;
       const determinacion = models.determinacion;
-      const muestras_requeridas = models.muestras_requeridas;
       
-      tipo_examen.hasMany(muestras_requeridas, {
-        foreignKey: 'id_tipo'
+      
+      tipo_examen.belongsToMany(tipo_muestra, {
+        through: 'muestras_requeridas',
+        foreignKey: 'id_tipo',
+        otherKey: 'id_tipo_muestra',
+     
+        constraints: false
       });
+
+
+
       tipo_examen.hasMany(examen, {
         foreignKey: 'id_tipo_examen'
       });

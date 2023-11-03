@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       // Importa el modelo 'valor' y úsalo para establecer la relación
       const valor = models.valor;
       const sexo = models.sexo;
+      
+
+
 
       determinacion.belongsTo(unidad_medida, {
         foreignKey: 'id_unidad_medida',
@@ -25,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       determinacion.belongsTo(tipo_examen, {
         foreignKey: 'id_tipo',
-        as: 'determinacions'
+       
       })
       
     }

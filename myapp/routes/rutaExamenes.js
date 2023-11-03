@@ -10,8 +10,10 @@ const {
   referencia,
   muestras_requeridas,
   sexo,
-  valor
+  valor,
+  tipo_muestra
 } = require('../models');
+//const tipo_muestra = require('../models/tipo_muestra');
 
 
 /*
@@ -151,6 +153,24 @@ router.get('/buscarExamenes', async (req, res) => {
             {
               model: unidad_medida
             },
+
+            {
+              model:tipo_examen,
+              
+              include: [
+                {
+                  model:muestras_requeridas,
+                      as:'m',
+                  include: [
+                    {
+                      model: tipo_muestra,
+                    
+                    }
+                  ]
+                },
+              ]
+            },
+          
             {
               model: referencia,
               as: 'referencia',
@@ -162,7 +182,9 @@ router.get('/buscarExamenes', async (req, res) => {
                 },
                 
               ]
+
             }
+           
           ]
         }
       ]
