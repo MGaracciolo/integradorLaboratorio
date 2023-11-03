@@ -5,6 +5,11 @@ html(lang='es')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title orden 
     link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css")
+    //cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css
+    link(rel='stylesheet', type='text/css', href='https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css')
+    script(src='https://code.jquery.com/jquery-3.7.0.js')
+    script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
     
   body
     #cabecera
@@ -15,74 +20,58 @@ html(lang='es')
       button#botonInicio.custom-button Inicio
       button.custom-button Orden de Trabajo     
       button.custom-button Salir
+      h2 Nueva Orden
 
-   
-    h2 Nueva Orden
-
-    #contenedorformularioOrdenes
-        form#formularioOrden(style='display: block;', action='/rutaOrden/agregarOrden', method='post')
-            p
-                | Fecha de Ingreso: 
-                input(type="date" name="fecha_ingreso" required)
-            p
-                | Diagnóstico:
-                input(type="text" name="diagnostico"  placeholder='Ingrese el presunto diagnostico' )
-            p
-                | Fecha de Entrega:
-                input(type="date" name="fecha_entrega")
-            p
-                | Doctor:
-                input(type="text" name="doctor"  placeholder='Ingrese el nombre del doctor' required)
-            p
-                | Estado:
-                select(name="id_estado" required)
-                    option(value="1") Ingresada
-                    option(value="2") Esperando Toma de Muestra
-                    option(value="3") Analítica
-            p
-                | Observación:
-                textarea(name="observacion")
-
-            button#botonAgregarOrden(type="submit") Crear Orden de Trabajo
-
-    each orden in ordenes
-        #editarOrden(data-id=orden.id)
-        form(action=`/rutaOrden/actualizarOrden/${orden.id}`, method='POST')
-            p
-                | Fecha de Ingreso: 
-                input(type="date" name="fecha_ingreso" value=orden.fecha_ingreso)
-            p
-                | Diagnóstico:
-                input(type="text" name="diagnostico"  value=orden.diagnostico)
-            p
-                | Fecha de Entrega:
-                input(type="date" name="fecha_entrega" value=orden.fecha_entrega)
-            p
-                | Doctor:
-                input(type="text" name="doctor"  value=orden.doctor)
-            p
-                | Estado:
-                select(name="id_estado" value=orden.id_estado)
-                    option(value="1") Ingresada
-                    option(value="2") Esperando Toma de Muestra
-                    option(value="3") Analítica
-            p
-                | Observación:
-                textarea(name="observacion" value=orden.observacion)
-
-    button(type='submit', class='custom-button guardar-button', data-id=orden.id) Guardar Cambios
-
-
-
-
-
-
-
+    table#tablaOrdenes.display
+        thead
+            tr
+            th Id Orden
+            th Diagnóstico
+            th Fecha de Ingreso
+            th Fecha de Entrega
+            th Doctor
+            th Estado
+            th Observación
+            th Id Paciente
+            th DNI
+            th Nombre
+            th Apellido
+            th Activo
+        tbody
+            each orden in ordenes
+                tr
+                    td.buscable= orden.id_orden
+                    td.buscable= orden.diagnostico
+                    td.buscable= orden.fecha_ingreso
+                    td.buscable= orden.fecha_entrega
+                    td.buscable= orden.doctor
+                    td.buscable= orden.estado.valor
+                    td.buscable= orden.observacion
+                    td.buscable= orden.id_paciente
+                    td.buscable= orden.paciente.dni
+                    td.buscable= orden.paciente.nombre
+                    td.buscable= orden.paciente.apellido
+                    td.buscable= orden.activo
+    
 
     footer#footer
       p Rivadavia 548, San Luis, Argentina
       p Teléfono: 266 4000000
       p Email: labwm@gmail.com
       p &copy; 2023 TreeLabWM
-    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    
     script(src='/javascripts/lab.js')
+    script.
+        $(document).ready(function() {
+            	
+            $('#tablaOrdenes').DataTable({
+                searching: true,
+                language: {
+                search: "Buscar en ordenes:"
+                },
+                columnDefs: [{
+                targets: 'buscable',
+                searchable: true
+                }]
+            });
+        });

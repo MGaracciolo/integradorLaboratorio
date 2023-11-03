@@ -11,16 +11,28 @@ module.exports = (sequelize, DataTypes) => {
       const muestra = models.muestra;
       
       orden.belongsTo(estado,{
-        foreingkey:'id_estado'
+        foreignKey: 'id_estado', 
+        targetKey: 'id_estado', 
+        as: 'estado',
+        constraints: false, 
       });
       orden.belongsTo(paciente,{
-        foreingkey:'id_paciente'
+        foreignKey: 'id_paciente', 
+        targetKey: 'id_paciente', 
+        as: 'paciente', 
+        constraints: false, 
       });
       orden.hasMany(examen,{
-        foreingkey:'id_orden'
+        foreignKey: 'id_orden', 
+        targetKey: 'id_orden',
+        as: 'orden-examen', 
+        constraints: false, 
       });
       orden.hasMany(muestra,{
-        foreingkey:'id_orden'
+        foreignKey: 'id_orden', 
+        targetKey: 'id_orden', 
+        as: 'orden-muestra', 
+        constraints: false, 
       });
     }
   }
@@ -31,16 +43,19 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true, // Esto define el campo como clave primaria
       autoIncrement: true, // Opcional, si el ID es autoincremental
     },
-    fecha_ingreso: DataTypes.DATEONLY,
     diagnostico: DataTypes.STRING,
+    fecha_ingreso: DataTypes.DATEONLY,
     fecha_entrega: DataTypes.DATEONLY,
     doctor: DataTypes.STRING,
     id_estado: DataTypes.INTEGER,
     observacion: DataTypes.STRING,
     id_paciente: DataTypes.INTEGER,
+    activo: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'orden',
+    tableName: 'orden',
+    timestamps: false
   });
   return orden;
 };
