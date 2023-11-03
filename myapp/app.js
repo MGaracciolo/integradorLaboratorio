@@ -43,6 +43,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const rutaPacienteRouter = require('./routes/rutaPaciente');
 const rutaExamenesRouter = require('./routes/rutaExamenes');
+const rutaOrdenRouter = require('./routes/rutaOrden');
 const app = express();
 
 
@@ -71,7 +72,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rutaPaciente', rutaPacienteRouter);
 app.use('/rutaExamenes', rutaExamenesRouter);
-
+app.use('/rutaOrden',rutaOrdenRouter);
 
 app.get('/index', (req, res) => {
   res.render('index');
@@ -80,6 +81,11 @@ app.get('/index', (req, res) => {
 app.get('/examenes', (req, res) => {
   res.render('examenes');
 })
+
+app.get('/orden', (req, res) => {
+  res.render('orden');
+})
+
 
 app.use(function(req, res, next) {
   next(createError(404));
