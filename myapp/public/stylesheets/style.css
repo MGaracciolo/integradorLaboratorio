@@ -120,3 +120,125 @@ body {
 #contenedorformularioExamenes input {
   width: 240px;
 }
+
+/* Aplicar estilos a la tabla */
+#examenesTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#examenesTable th, #examenesTable td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+#examenesTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Establecer un ancho fijo para las columnas */
+#examenesTable th {
+  width: 20%;
+}
+
+/* Separar las determinaciones en líneas individuales */
+#examenesTable td {
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+/* Estilo para las filas impares */
+#examenesTable tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Estilos para el formulario de nuevo examen */
+#formularioNuevoExamen {
+  width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#formularioNuevoExamen p {
+  font-family: 'Open Sans', sans-serif;
+  margin: 10px 0;
+}
+
+#formularioNuevoExamen input[type="text"] {
+  width: 94%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#formularioNuevoExamen select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#formularioNuevoExamen button {
+  background-color: #30D6BA;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 auto; /* Establece un margen horizontal automático */
+  display: block; /* Asegura que el botón ocupe toda la anchura disponible */
+}
+
+
+#formularioNuevoExamen button:hover {
+  background-color: #1AA99B;
+}
+
+
+
+
+/* Estilo para el contenedor del formulario con el ID 'buscador' */
+#buscador {
+  text-align: center;
+  margin: 20px auto;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el campo de entrada de texto */
+#buscador input[type="text"] {
+  width:94%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Estilo para el botón 'buscador' */
+#buscador button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #1AA99B; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Efecto de transición al pasar el mouse */
+}
+
+#buscador button[type="submit"]:hover {
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}

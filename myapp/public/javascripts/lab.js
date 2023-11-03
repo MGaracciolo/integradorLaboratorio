@@ -27,5 +27,3 @@ botonNuevoPacienteInicio.addEventListener('click', function () {
   
 });
 
-
-

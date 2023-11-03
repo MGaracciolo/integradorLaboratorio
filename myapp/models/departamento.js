@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class departamento extends Model {
     
     static associate(models) {
+      // Importa el modelo 'empleado' y úsalo para establecer la relación
       const empleado = models.empleado;
       departamento.hasMany(empleado, {
         foreignKey: 'id_departamento'

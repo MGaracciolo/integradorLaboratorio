@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'unidad_medida',
+    tableName: 'unidad_medida',
+    timestamps: false
   });
   return unidad_medida;
 };

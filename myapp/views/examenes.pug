@@ -2,10 +2,10 @@ doctype html
 html(lang='es')
   head
     meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title examenes 
-    link(rel="stylesheet", href="/stylesheets/style.css")
-    
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Exámenes
+    link(rel="stylesheet" href="/stylesheets/style.css")
+
   body
     #cabecera
       img(src='/images/banner.png', alt='Logo del laboratorio')
@@ -13,46 +13,86 @@ html(lang='es')
       button#botonAgregarPaciente.custom-button Agregar Paciente
       button#botonBuscarPaciente.custom-button Buscar Paciente
       button#botonInicio.custom-button Inicio
-      button.custom-button Orden de Trabajo     
+      button.custom-button Orden de Trabajo
       button.custom-button Salir
 
-   
-    h2 Nuevo Exámen
+    h2 Búsqueda de Exámenes
+    form#buscador(action='/rutaExamenes/buscarExamenes', method='GET')
+      p Ingrese nombre del exámen:
+      input(type='text', name='busqueda')
+      button(type='submit') Buscar
 
-    #contenedorformularioExamenes 
-        form#formularioPaciente(style='display: block;', action='/rutaExamenes/agregarExamen', method='post')
-          p
-            | Nombre del Examen:
-            input(type='text', name='nombreExamen', placeholder='Ingrese el nombre del examen')
-          p
-            | Determinaciones 
-          p
-            | nombre de la Determinacion
-            input(type='text', name='nombreDeterminacion', placeholder='Ingrese el nombre de la determinacion')
-         
-          p
-            | valores de Referencia,segun la edad: 
-          p
-            | minimo
-            input(type='text', name='minimo', placeholder='Ingrese el valor mínimo')
-          p
-            | máximo
-            input(type='text', name='maximo', placeholder='Ingrese el valor maximo')
-          p
-            | unidad de medida
-            input(type='text', name='unidadMedida', placeholder='Ingrese la unidad de medida')            
-          p
-            | muestras: 
-            //input(type='text', name='muestras', placeholder='Ingrese las muestras requeridas')
-            label(for="muestras") 
-            select(id="muestras", name="muestras")
-                option(value="sangre") sangre
-                option(value="orina") orina
-                option(value="materia fecal") materia fecal
+    
 
-          button#botonAgregarExamen(type='submit') Agregar Nuevo Exámen
+    
+
+            script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+
+    h2 Nuevo Examen
+    form#formularioNuevoExamen(action='/rutaExamenes/crearExamen', method='POST')
+      p
+        | Nombre del Examen:
+        input(type='text', name='nombreExamen', placeholder='Ingrese el nombre del examen')
+      p
+        | Determinaciones
+      p
+        | Nombre de la Determinación
+        input(type='text', name='nombreDeterminacion', placeholder='Ingrese el nombre de la determinación')
+      p
+        | Valores de Referencia, según la edad:
+      p
+        | Mínimo
+        input(type='text', name='minimo', placeholder='Ingrese el valor mínimo')
+      p
+        | Máximo
+        input(type='text', name='maximo', placeholder='Ingrese el valor máximo')
+      
+      p
+        | Muestras:  
+        div
+          label(for="sangre") Sangre
+          input(type="checkbox", name="muestras", value="Sangre")
+        div
+          label(for="orina") Orina
+          input(type="checkbox", name="muestras", value="Orina")
+        div
+          label(for="materia_fecal") Materia Fecal
+          input(type="checkbox", name="muestras", value="Materia Fecal")
+        div
+          label(for="saliva") Saliva
+          input(type="checkbox", name="muestras", value="Saliva")
+
+        
+      p
+        | Unidad de Medida:
+        
+        select(id='unidadMedidaSelect', name='unidadMedida')
+        script.
+          $(document).ready(function() {
+            // Realiza una petición AJAX para obtener las unidades de medida
+            $.ajax({
+              url: '/rutaExamenes/unidadMedidaSelect', // Define la ruta en tu servidor
+              method: 'GET',
+              dataType: 'json',
+              success: function(data) {
+                // Llena el select con las unidades de medida
+                data.forEach(function(unidad) {
+                  $('#unidadMedidaSelect').append($('<option>', {
+                    value: unidad.id,
+                    text: unidad.unidad
+                  }));
+                });
+              },
+              error: function(error) {
+                console.error('Error al cargar las unidades de medida: ' + error);
+              }
+            });
+          });
+      button(type='submit') Crear
 
 
+
+      
 
 
 

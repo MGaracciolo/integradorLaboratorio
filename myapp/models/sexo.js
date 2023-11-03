@@ -2,15 +2,21 @@
 const {
   Model
 } = require('sequelize');
+const referencia = require('./referencia');
 module.exports = (sequelize, DataTypes) => {
   class sexo extends Model {
     
     static associate(models) {
       const paciente = models.paciente;
-      
+      const referencia = models.referencia;
       sexo.hasMany(paciente,{
         foreignKey:'id_sexo'
     });
+
+    sexo.hasMany(referencia,{
+      foreignKey:'id_sexo',
+      
+    })
     }
   }
   sexo.init({
@@ -25,6 +31,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'sexo',
+    tableName: 'sexo',
+    timestamps: false
   });
   return sexo;
 };

@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class empleado extends Model {
     static associate(models) {
-      const departamento = models.departamento; 
+      const departamento = models.departamento; // Importa el modelo 'paciente' y asócialo.
       const user = models.user;
       const examen = models.examen;
 

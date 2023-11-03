@@ -1,3 +1,4 @@
+//models/examen
 'use strict';
 const {
   Model
@@ -37,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'examen',
+    tableName: 'examen',
   });
   return examen;
 };
