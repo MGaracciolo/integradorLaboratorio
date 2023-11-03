@@ -11,8 +11,15 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             const determinacion = models.determinacion;
+            const sexo = models.sexo;
+
+referencia.belongsTo(sexo, {
+    foreignKey: 'id_sexo',
+});
+
             referencia.hasMany(determinacion, {
-                foreignKey: 'id_referencia'
+                foreignKey: 'id_referencia',
+                as: 'referencia'
             });
         }
     }
@@ -35,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'referencia',
-
+        tableName: 'referencia',
+        timestamps: false
     });
     return referencia;
 };

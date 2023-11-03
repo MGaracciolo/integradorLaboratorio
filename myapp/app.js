@@ -43,7 +43,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const rutaPacienteRouter = require('./routes/rutaPaciente');
 const rutaExamenesRouter = require('./routes/rutaExamenes');
-const rutaOrdenRouter = require('./routes/rutaOrden');
+//const deterValoresR = require('./routes/deter-valoresR'); // Utiliza la ruta relativa correcta
+
 const app = express();
 
 
@@ -72,7 +73,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rutaPaciente', rutaPacienteRouter);
 app.use('/rutaExamenes', rutaExamenesRouter);
-app.use('/rutaOrden',rutaOrdenRouter);
+//app.use('/deter-valoresR', deterValoresR);
 
 app.get('/index', (req, res) => {
   res.render('index');
@@ -82,10 +83,9 @@ app.get('/examenes', (req, res) => {
   res.render('examenes');
 })
 
-app.get('/orden', (req, res) => {
-  res.render('orden');
+app.get('/examenesResult', (req, res) => {
+  res.render('examenesResult');
 })
-
 
 app.use(function(req, res, next) {
   next(createError(404));
