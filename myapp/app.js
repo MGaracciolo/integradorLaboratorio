@@ -44,6 +44,7 @@ const usersRouter = require('./routes/users');
 const rutaPacienteRouter = require('./routes/rutaPaciente');
 const rutaExamenesRouter = require('./routes/rutaExamenes');
 const rutaOrdenRouter = require('./routes/rutaOrden');
+const rutaMuestraRouter = require('./routes/rutaMuestra');
 //const deterValoresR = require('./routes/deter-valoresR'); // Utiliza la ruta relativa correcta
 
 const app = express();
@@ -75,6 +76,7 @@ app.use('/users', usersRouter);
 app.use('/rutaPaciente', rutaPacienteRouter);
 app.use('/rutaExamenes', rutaExamenesRouter);
 app.use('/rutaOrden',rutaOrdenRouter);
+app.use('/rutaMuestra',rutaMuestraRouter);
 //app.use('/deter-valoresR', deterValoresR);
 
 app.get('/index', (req, res) => {
@@ -92,6 +94,10 @@ app.get('/orden', (req, res) => {
 
 app.get('/examenesResult', (req, res) => {
   res.render('examenesResult');
+})
+
+app.get('/muestra', (req, res) => {
+  res.render('muestra');
 })
 
 app.use(function(req, res, next) {
