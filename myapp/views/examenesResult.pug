@@ -32,6 +32,7 @@ html(lang='es')
           th(data-sort='num') Valor de Referencia
           th(data-sort='string') Unidad de Medida
           th(data-sort='string') sexo
+          th Muestra
       tbody
       - if (tipoExamenes && tipoExamenes.length > 0)
         each tipo_examen in tipoExamenes
@@ -44,7 +45,8 @@ html(lang='es')
                 td= `${determinacion.referencia ? determinacion.referencia.minimo + ' - ' + determinacion.referencia.maximo : ''}`
                 td= `${determinacion.unidad_medida ? determinacion.unidad_medida.unidad : ''}`
                 td= `${determinacion.referencia.sexo ? determinacion.referencia.sexo.valor : ''}`
-
+                td= `${determinacion.tipo_examen.muestras_requeridas.tipo_muestra ? determinacion.tipo_examen.muestras_requeridas.tipo_muestra.valor : ''}`
+ 
           - else
             tr
               td= tipo_examen.descripcion
