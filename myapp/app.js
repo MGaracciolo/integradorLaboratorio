@@ -87,9 +87,17 @@ app.get('/examenes', (req, res) => {
   res.render('examenes');
 })
 
-app.get('/orden', (req, res) => {
-  res.render('orden');
-})
+app.get('/rutaOrden/:tipoOrden', (req, res) => {
+  const tipoOrden = req.params.tipoOrden;
+
+  if (tipoOrden === 'buscarOrden') {
+    res.render('buscarOrden'); // Renderiza buscarOrden.pug si se accede a rutaOrden/buscarOrden
+  } else if (tipoOrden === 'agregarOrden') {
+    res.render('orden'); // Renderiza orden.pug si se accede a rutaOrden/agregarOrden
+  } else {
+    res.send('Orden no encontrada'); // Manejo de situaciones donde el tipo de orden no coincide
+  }
+});
 
 
 app.get('/examenesResult', (req, res) => {

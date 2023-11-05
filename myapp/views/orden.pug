@@ -21,104 +21,98 @@ html(lang='es')
       button.custom-button Orden de Trabajo     
       button.custom-button Salir
     
-    h2 Nueva Orden
-
-    table#tablaBuscarPacienteO.cell-border.compact.display
-        thead
-            tr
-            th   
-            th Id Paciente
-            th DNI
-            th Nombre
-            th Apellido
-            th Fecha de Nacimiento
-        tbody
-            each paciente in pacientes
-                tr
-                    td 
-                        input(type="button", id="idPacienteInput", value="Seleccionar")
-                    td.buscable= paciente.id_paciente
-                    td.buscable= paciente.dni
-                    td.buscable= paciente.nombre
-                    td.buscable= paciente.apellido
-                    td.buscable= paciente.fecha_nacimiento
+    #contenedorSeleccionarPaciente
+      h2 Seleccione un Paciente
+      table#tablaBuscarPacienteO.cell-border.compact.display
+          thead
+              tr
+              th   
+              th Id Paciente
+              th DNI
+              th Nombre
+              th Apellido
+              th Fecha de Nacimiento
+          tbody
+              each paciente in pacientes
+                  tr
+                      td 
+                          input(type="button", class="seleccionar-paciente", data-id=paciente.id_paciente, value="Seleccionar")
+                      td.buscable= paciente.id_paciente
+                      td.buscable= paciente.dni
+                      td.buscable= paciente.nombre
+                      td.buscable= paciente.apellido
+                      td.buscable= paciente.fecha_nacimiento
                     
 
     #contenedorformularioOrdenes
-        form#formularioOrden(style='display: block;', action='/rutaOrden/agregarOrden', method='post')
+        form#formularioOrden(action='/rutaOrden/agregarOrden', method='post')
+          #contenedorPacientes
             h2 Paciente:
-            //- p
-            //-     | ID
-            //-     input(type="text", id="idPacienteInput" readonly value="id")
-            //- p
-            //-     | Nombre
-            //-     input(type="text", name="nombre" value=paciente.nombre readonly )
-            //- p
-            //-     | ID
-            //-     input(type="text", name="apellido" readonly value=paciente.apellido)
-            //- p
-            //-     | ID
-            //-     input(type="text", name="sexo" readonly value=paciente.id_sexo)
-            p
-                | Fecha de Ingreso: 
-                input(type="date" name="fecha_ingreso" required)
-            p
-                | Diagnóstico:
-                input(type="text" name="diagnostico"  placeholder='Ingrese el presunto diagnostico' )
-            p
-                | Fecha de Entrega:
-                input(type="date" name="fecha_entrega")
-            p
-                | Doctor:
+            .fila
+              .columna
+                | ID:
+                input(type="text", id="idPacienteInput", name="id_paciente", readonly)
+              .columna
+                | DNI:
+                input(type="text", id="dniPacienteInput", name="dni", readonly)
+            .fila
+              .columna
+                | Nombre:
+                input(type="text", id="nombrePacienteInput", name="nombre", readonly)
+              .columna
+                | Apellido:
+                input(type="text", id="apellidoPacienteInput", name="apellido", readonly)
+            input(type="button", class="cambiar-paciente", value="Cambiar de paciente")
+          #contenedorOrdenes
+            h2 Orden:
+            .fila
+              .columna
+                p
+                    | Fecha de Ingreso: 
+                    input(type="date" name="fecha_ingreso" required)
+              .columna
+                p
+                    | Asignado a:
+                    select(name="id_empleado", required)
+                      each empleado in empleados
+                        option(value=empleado.id_empleado)= empleado.nombre_empleado + empleado.apellido_empleado
+              .columna
+                p
+                    | Fecha de Entrega:
+                    input(type="date" name="fecha_entrega")
+            .fila
+              .columna
+                p
+                    | Diagnóstico:
+                    input(type="text" name="diagnostico"  placeholder='Ingrese el presunto diagnostico' )
+              .columna
+                p
+                | Solicita:
                 input(type="text" name="doctor"  placeholder='Ingrese el nombre del doctor' required)
-            p
-                | Estado:
-                select(name="id_estado" required)
-                    option(value="1") Ingresada
-                    option(value="2") Esperando Toma de Muestra
-                    option(value="3") Analítica
-            p
-                | Observación:
-                textarea(name="observacion")
-
-            button#botonAgregarOrden(type="submit") Crear Orden de Trabajo
-
-    //- table#tablaOrdenes.cell-border.compact.display
-    //-     thead
-    //-         tr
-    //-         th Id Orden
-    //-         th Diagnóstico
-    //-         th Fecha de Ingreso
-    //-         th Fecha de Entrega
-    //-         th Doctor
-    //-         th Estado
-    //-         th Observación
-    //-         th Id Paciente
-    //-         th DNI
-    //-         th Nombre
-    //-         th Apellido
-    //-         th Activo
-    //-         th Opciones
-    //-     tbody
-    //-         each orden in ordenes
-    //-             tr
-    //-                 td.buscable= orden.id_orden
-    //-                 td.buscable= orden.diagnostico
-    //-                 td.buscable= orden.fecha_ingreso
-    //-                 td.buscable= orden.fecha_entrega
-    //-                 td.buscable= orden.doctor
-    //-                 td.buscable= orden.estado.valor
-    //-                 td.buscable= orden.observacion
-    //-                 td.buscable= orden.id_paciente
-    //-                 td.buscable= orden.paciente.dni
-    //-                 td.buscable= orden.paciente.nombre
-    //-                 td.buscable= orden.paciente.apellido
-    //-                 td.buscable= orden.activo
-    //-                 td
-    //-                  input(type="button", value="Editar")
-    //-                  input(type="button", value="Desactivar")
-    //-                  input(type="button", value="Activar")
-    
+            .fila
+              .columna
+                //- form(action="/buscarOrden", method="post")
+                //-   p
+                //-     | Tipo de examen:
+                //-     select(name="tipo_examen", required)
+                //-       each tipo_examen in tipos_examen
+                //-         option(value=tipo_examen.id_tipo)= tipo_examen.descripcion
+              //- .columna 
+              //-   input(type="button", value="Registrar Muestra", data-id-orden=id_orden)
+            .fila
+              .columna
+                form(action="/buscarOrden", method="post")
+                  p
+                    | Estado de la orden:
+                    select(name="estado", required)
+                      each estado in estados
+                        option(value=estado.id_estado)= estado.valor
+              .columna
+                p
+                    | Observación:
+                    textarea(name="observacion")
+            .fila
+              button#botonAgregarOrden(type="submit") Crear Orden de Trabajo
 
     footer#footer
       p Rivadavia 548, San Luis, Argentina
@@ -136,18 +130,40 @@ html(lang='es')
                 },
                 columnDefs: [{
                 targets: 'buscable',
-                searchable: true
-                }]
+                searchable: true,
+                }],
+                columns:[
+                     { "width": "5%" }, 
+                    { "width": "5%" }, 
+                    { "width": "20%" },
+                    { "width": "20%" }, 
+                    { "width": "20%" }, 
+                    { "width": "20%"} 
+                ]               
+            })
         });
-        
-            //- $('#tablaOrdenes').DataTable({
-            //-     searching: true,
-            //-     language: {
-            //-     search: "Buscar en ordenes:"
-            //-     },
-            //-     columnDefs: [{
-            //-     targets: 'buscable',
-            //-     searchable: true
-            //-     }]
-            //- });
+        $('.seleccionar-paciente').click(function() {
+          const idPaciente = $(this).data('id');
+          const nombre = $(this).closest('tr').find('td:nth-child(4)').text();
+          const apellido = $(this).closest('tr').find('td:nth-child(5)').text();
+          const dni = $(this).closest('tr').find('td:nth-child(3)').text();
+
+          $('#idPacienteInput').val(idPaciente);
+          $('#nombrePacienteInput').val(nombre);
+          $('#apellidoPacienteInput').val(apellido);
+          $('#dniPacienteInput').val(dni);
+          $('#contenedorSeleccionarPaciente').hide();
+          $('#contenedorformularioOrdenes').show();
         });
+        $('.cambiar-paciente').click(function() {
+          $('#contenedorSeleccionarPaciente').show();
+          $('#contenedorformularioOrdenes').hide();
+        });
+        $('.input[value="Registrar Muestra"]').click(function() {
+          const idOrden = $(this).data('id-orden');
+          // Utiliza el valor idOrden en la URL para abrir la ventana emergente
+          window.open('http://localhost:5000/muestra?id=' + idOrden, '_blank');
+        });
+
+    
+       

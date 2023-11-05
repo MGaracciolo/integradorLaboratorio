@@ -3,36 +3,43 @@ const router = express.Router();
 const {orden} = require('../models'); 
 const {estado} = require('../models'); 
 const {paciente} = require('../models'); 
-const {user} = require('../models'); 
-const {obra_social} = require('../models'); 
-const {sexo} = require('../models'); 
-const {direccion} = require('../models'); 
-const {Op} = require('sequelize');
 
 
 
-router.get('/buscar', async (req, res) => {
+router.get('/buscarOrden', async (req, res) => {
   try {
     const ordenes = await orden.findAll({
       attributes: [`id_orden`, `diagnostico`, `fecha_ingreso`, `fecha_entrega`, `doctor`, `id_estado`, `observacion`, `id_paciente`, `activo`],
       include: [
         {
           model: estado,
-          as: 'estado' // Especifica el alias 'estado'
+          as: 'estado', // Especifica el alias 'estado'
+          attributes: ['id_estado', 'valor', 'descripcion']
         },
         {
           model: paciente,
           as: 'paciente', // Especifica el alias 'estado'
           attributes: ['id_paciente', 'dni', 'nombre', 'apellido']
+        },
+        {
+          model: examen,
+          as: 'examen',
+          include:[
+            {
+              model: tipo_examen,
+              as: 'tipo_examen', // Especifica el alias 'estado'
+              attributes: ['id_tipo','descripcion']
+            }
+          ]
         }
       ],
     });
     if (ordenes.length === 0) {
-      res.render('orden', {
+      res.render('buscarOrden', {
         noResult: true
       });
-    } else {9
-      res.render('orden', {
+    } else {
+      res.render('buscarOrden', {
         ordenes
       });
     }
@@ -84,13 +91,30 @@ router.get('/agregarOrden', async (req, res) => {
     const pacientes = await paciente.findAll({
       attributes: ['id_paciente', 'dni', 'nombre', 'apellido', 'fecha_nacimiento', 'id_obra_social', 'numero_afiliado', 'telefono', 'id_sexo', 'id_direccion', 'id_user'],
     });
+    const estados = await estado.findAll({
+      attributes: ['id_estado', 'valor', 'descripcion']
+    });
+    const examenes = await examen.findAll({
+      include: [
+        {
+          model: tipo_examen,
+          as: 'tipo_examen',
+          attributes: ['id_tipo', 'descripcion']
+        },
+        {
+          model: empleado,
+          as: 'empleado',
+          attributes: ['id_empleado', 'nombre_empleado', 'apellido_empleado']
+        }
+      ]
+    });
     if (pacientes.length === 0) {
       res.render('orden', {
         noResult: true
       });
-    } else {9
+    } else {
       res.render('orden', {
-        pacientes
+        pacientes, estados
       });
     }
   } catch (error) {

@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const {muestra} = require('../models');
 
-router.post('/agregar', async (req, res) => {
+router.post('/agregar/:id', async (req, res) => {
+  const id = req.params.id;
     const { 
         fecha_recoleccion,
         hora_recoleccion,
         id_tipo_muestra,
         precedencia,
-        id_orden,
+        id_orden=id,
     } = req.body;
     try {
       const nuevaMuestra = await muestra.create({
