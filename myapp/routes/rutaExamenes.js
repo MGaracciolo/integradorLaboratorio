@@ -44,7 +44,7 @@ router.get('/crearExamen', async (req, res) => {
 });
 */
 
-
+//console.log('asdsadasd',muestras_requeridas.findAll());
 
 router.get('/unidadMedidaSelect', async (req, res) => {
   try {
@@ -132,12 +132,12 @@ router.post('/crearExamens', async (req, res) => {
 
 
 
-
+/*
 router.get('/buscarExamenes', async (req, res) => {
   try {
     const busqueda = req.query.busqueda;
-    
-    // Realiza la consulta SQL utilizando Sequelize, incluyendo las relaciones
+
+    // Realiza la consulta SQL utilizando Sequelize, incluyendo las relaciones necesarias
     const tipoExamenes = await tipo_examen.findAll({
       attributes: ['id_tipo', 'descripcion'],
       where: {
@@ -153,24 +153,6 @@ router.get('/buscarExamenes', async (req, res) => {
             {
               model: unidad_medida
             },
-
-            {
-              model:tipo_examen,
-              
-              include: [
-                {
-                  model:muestras_requeridas,
-                      as:'m',
-                  include: [
-                    {
-                      model: tipo_muestra,
-                    
-                    }
-                  ]
-                },
-              ]
-            },
-          
             {
               model: referencia,
               as: 'referencia',
@@ -178,17 +160,77 @@ router.get('/buscarExamenes', async (req, res) => {
                 {
                   model: sexo,
                   as: 'sexo',
-                  attributes: ['valor'] 
-                },
-                
+                  attributes: ['valor']
+                }
               ]
-
+            },
+            {
+              model: tipo_examen,
+              
+              include: [
+                {
+                  model: tipo_muestra,
+                }
+              ]
             }
-           
           ]
         }
       ]
     });
+    
+
+    res.render('examenesResult', {
+      tipoExamenes
+    });
+  } catch (error) {
+    console.error('Error al buscar exámenes:', error);
+    res.status(500).send('Error al buscar exámenes');
+  }
+});
+*/
+router.get('/buscarExamenes', async (req, res) => {
+  try {
+    const busqueda = req.query.busqueda;
+
+    const tipoExamenes = await tipo_examen.findAll({
+      attributes: ['id_tipo', 'descripcion'],
+      where: {
+        descripcion: {
+          [Op.like]: `%${busqueda}%`
+        }
+      },
+      include: [
+        {
+          model: determinacion,
+          as: 'determinacions',
+          include: [
+            {
+              model: unidad_medida
+            },
+            {
+              model: referencia,
+              as: 'referencia',
+              include: [
+                {
+                  model: sexo,
+                  as: 'sexo',
+                  attributes: ['valor']
+                }
+              ]
+            }
+          ]
+        },
+        {
+          model: tipo_muestra,
+          attributes: [ 'valor'],  // Incluye las muestras requeridas
+          through: {
+            model: muestras_requeridas,
+            as: 'muestras_requeridas',
+          }
+        }
+      ]
+    });
+    
 
     res.render('examenesResult', {
       tipoExamenes
@@ -202,14 +244,13 @@ router.get('/buscarExamenes', async (req, res) => {
 
 
 
-
 router.post('/agregarExamen', async (req, res, next) => {
   const {
     descripcion,
   } = req.body;
 
   try {
-    const nuevoExamen = await tipoExamen.create({
+    const nuevoExamen = await tipo_examen.create({
       descripcion,
     });
     res.status(201).json({

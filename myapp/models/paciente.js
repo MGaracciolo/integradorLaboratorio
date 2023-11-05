@@ -55,7 +55,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'paciente',
-    tableName: 'paciente', // Esto define el nombre de la tabla en la base de datos
+    tableName: 'paciente', 
+    timestamps: false,// Esto define el nombre de la tabla en la base de datos
   });
 
   return paciente;

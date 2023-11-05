@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'obra_social',
+    tableName: 'obra_social',
+    timestamps: false
   });
   return obra_social;
 };
