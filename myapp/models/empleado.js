@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       const user = models.user;
       const examen = models.examen;
 
+
       empleado.belongsTo(departamento, {
         foreignKey: 'id_departamento'
       });

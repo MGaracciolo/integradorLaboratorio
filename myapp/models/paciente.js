@@ -14,10 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       const sexo = models.sexo;
       
       paciente.hasMany(orden,{
-        foreignKey: 'id_paciente', // Nombre de la clave externa en el modelo "orden"
-        targetKey: 'id_paciente', // Nombre de la clave en el modelo "estado"
-        as: 'paciente', // Alias para la relación
-        constraints: false,
+        foreignKey:'id_paciente'
       });
       paciente.belongsTo(obra_social,{
         foreignKey:'id_obra_social'
@@ -55,7 +52,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'paciente',
-    tableName: 'paciente', // Esto define el nombre de la tabla en la base de datos
+    tableName: 'paciente', 
+    timestamps: false,// Esto define el nombre de la tabla en la base de datos
   });
 
   return paciente;
