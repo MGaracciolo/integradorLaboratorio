@@ -20,22 +20,21 @@ html(lang='es')
 
     #contenedorformularioMuestra
         form#formularioMuestra(style='display: block;', action='/rutaMuestra/agregar', method='POST')
-            p.imprimir
-                | Id Muestra: 
-                input(type="text"  class="imprimir" readonly)
+            //- p.imprimir
+            //-     | Id Muestra: 
+            //-     input(type="text"  class="imprimir" readonly)
             p.imprimir
                 | Fecha de Recoleccion: 
                 input(type="date" name="fecha_recoleccion" class="imprimir" required)
             p.imprimir
                 | Hora de Recoleccion:
                 input(type="time" name="hora_recoleccion" class="imprimir" required)
-            p.imprimir
-                | Tipo de Muestra:
-                select(name="id_tipo_muestra" class="imprimir" required)
-                    option(value="1") Sangre
-                    option(value="2") Orina 
-                    option(value="3") Materia Fecal
-                    option(value="4") Saliva
+            form(action="/rutaMuestra/buscarMuestra", method="get")
+              p.imprimir
+                  | Tipo de Muestra:
+                  select(name="tipo_muestra")
+                      each tipo_muestra in tipos_muestra
+                        option(value=tipo_muestra.id_tipo_muestra)= tipo_muestra.valor
             p
                 | Precedencia:
                 select(name="precedencia" required)
@@ -43,7 +42,7 @@ html(lang='es')
                     option(value="Externa") Externa 
             p
                 | Orden:
-                input(type="text" name="id_orden" class="imprimir")
+                input(type="text" name="id_orden" class="imprimir" readonly value=id)
             button#botonAgregarMuestra(type="submit") Guardar e Imprimir
 
 

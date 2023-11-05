@@ -118,6 +118,34 @@ body {
   margin: 5px;
 }
 
+#formBuscarPaciente {
+  text-align: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#busquedaPaciente {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#botonBuscar {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#botonBuscar:hover {
+  background-color: #0056b3;
+}
+
 
 #contenedorformularioExamenes input {
   width: 240px;
@@ -262,6 +290,39 @@ body {
   }
 }
 
-#escondido{
-  visibility: hidden;
+#tablaBuscarPacienteO thead{
+  background-color:#185786;
+  color: #ccc;
+}
+#tablaBuscarPacienteO thead th{
+  text-align: center;
+}
+#tablaBuscarPacienteO{
+  text-align: center;
+}
+
+#contenedorformularioOrdenes{
+  display: none;
+}
+
+#contenedorPacientes, #contenedorOrdenes{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.fila{
+  display:flex;
+  flex-direction: row;
+
+}
+
+.columna{
+  margin: 10px 35px;
+}
+.primeraLinea, .segundaLinea {
+  display: flex; /* Utiliza un contenedor flexible para alinear elementos en línea */
+  justify-content:space-between; /* Centra los elementos horizontalmente */
+  margin: 20px 20px; /* Espaciado entre las filas de p */
 }
