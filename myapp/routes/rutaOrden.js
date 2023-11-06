@@ -16,22 +16,13 @@ router.get('/buscarOrden', async (req, res) => {
       include: [
         {
           model: estado,
-          as: 'estado', // Especifica el alias 'estado'
+          as: 'estado', 
           attributes: ['id_estado', 'valor', 'descripcion']
         },
         {
           model: paciente,
-          as: 'paciente', // Especifica el alias 'estado'
+          as: 'paciente', 
           attributes: ['id_paciente', 'dni', 'nombre', 'apellido']
-        },
-        {
-          model: examen,
-          include:[
-            {
-              model: tipo_examen,
-              as: 'tipo_examen', // Especifica el alias 'estado'
-            }
-          ]
         }
       ],
     });
@@ -99,22 +90,16 @@ router.get('/agregarOrden', async (req, res) => {
     const tipo_examenes = await tipo_examen.findAll({
           attributes: ['id_tipo', 'descripcion']
     });
-    const empleados = await empleado.findAll({
-      attributes: ['id_empleado', 'nombre', 'apellido']
-    });
-    const examenes = await examen.findAll({
-      attributes: ['id_examen', 'id_tipo', 'id_orden','id_empleado'],
-      include:{
-        
-      }
-    });
+    // const empleados = await empleado.findAll({
+    //   attributes: ['id_empleado', 'nombre', 'apellido']
+    // });
     if (pacientes.length === 0) {
       res.render('orden', {
         noResult: true
       });
     } else {
       res.render('orden', {
-        pacientes, estados, tipo_examenes, empleados
+        pacientes, estados, tipo_examenes//, empleados
       });
     }
   } catch (error) {

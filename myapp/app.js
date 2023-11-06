@@ -43,7 +43,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const rutaPacienteRouter = require('./routes/rutaPaciente');
 const rutaExamenesRouter = require('./routes/rutaExamenes');
- 
+const rutaOrdenRouter = require('./routes/rutaOrden');
+const rutaMuestraRouter = require('./routes/rutaMuestra');
 //const deterValoresR = require('./routes/deter-valoresR'); // Utiliza la ruta relativa correcta
 
 const app = express();
@@ -74,6 +75,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rutaPaciente', rutaPacienteRouter);
 app.use('/rutaExamenes', rutaExamenesRouter);
+app.use('/rutaOrden',rutaOrdenRouter);
+app.use('/rutaMuestra',rutaMuestraRouter);
 //app.use('/deter-valoresR', deterValoresR);
 
 app.get('/index', (req, res) => {
@@ -84,16 +87,25 @@ app.get('/examenes', (req, res) => {
   res.render('examenes');
 })
 
+app.get('/rutaOrden/:tipoOrden', (req, res) => {
+  const tipoOrden = req.params.tipoOrden;
+
+  if (tipoOrden === 'buscarOrden') {
+    res.render('buscarOrden'); // Renderiza buscarOrden.pug si se accede a rutaOrden/buscarOrden
+  } else if (tipoOrden === 'agregarOrden') {
+    res.render('orden'); // Renderiza orden.pug si se accede a rutaOrden/agregarOrden
+  } else {
+    res.send('Orden no encontrada'); // Manejo de situaciones donde el tipo de orden no coincide
+  }
+});
+
+
 app.get('/examenesResult', (req, res) => {
   res.render('examenesResult');
 })
 
-app.get('/editarPaciente', (req, res) => {
-  res.render('editarPaciente');
-})
-
-app.get('/resultBusquedaP', (req, res) => {
-  res.render('resultBusquedaP');
+app.get('/muestra', (req, res) => {
+  res.render('muestra');
 })
 
 app.use(function(req, res, next) {

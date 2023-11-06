@@ -77,11 +77,11 @@ html(lang='es')
                     | Fecha de Ingreso: 
                     input(type="date" name="fecha_ingreso" required)
               .columna
-                p
-                    | Asignado a:
-                    select(name="id_empleado", required)
-                      each empleado in empleados
-                        option(value=empleado.id_empleado)= empleado.nombre_empleado + ' '+ empleado.apellido_empleado
+                //- p
+                //-     | Asignado a:
+                //-     select(name="id_empleado", required)
+                //-       each empleado in empleados
+                //-         option(value=empleado.id_empleado)= empleado.nombre_empleado + ' '+ empleado.apellido_empleado
               .columna
                 p
                     | Fecha de Entrega:

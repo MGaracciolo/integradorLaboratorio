@@ -8,10 +8,15 @@ module.exports = (sequelize, DataTypes) => {
       const orden = models.orden;
       
       muestra.belongsTo(tipo_muestra,{
-        foreingkey:'id_tipo_muestra'
+        foreingkey:'id_tipo_muestra',
+        as: 'tipo_muestra',
+        constraints: false, 
       });
       muestra.belongsTo(orden,{
-        foreingkey:'id_orden'
+        foreignKey: 'id_orden', 
+        targetKey: 'id_orden', 
+        as: 'orden-muestra', 
+        constraints: false, 
       });
     }
   }
@@ -30,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'muestra',
+    tableName: 'muestra',
+    timestamps: false
   });
   return muestra;
 };
