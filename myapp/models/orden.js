@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     diagnostico: DataTypes.STRING,
     fecha_ingreso: DataTypes.DATEONLY,
+    diagnostico: DataTypes.STRING,
     fecha_entrega: DataTypes.DATEONLY,
     doctor: DataTypes.STRING,
     id_estado: DataTypes.INTEGER,

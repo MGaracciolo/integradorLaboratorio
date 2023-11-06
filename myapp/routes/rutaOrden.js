@@ -23,6 +23,15 @@ router.get('/buscarOrden', async (req, res) => {
           model: paciente,
           as: 'paciente', // Especifica el alias 'estado'
           attributes: ['id_paciente', 'dni', 'nombre', 'apellido']
+        },
+        {
+          model: examen,
+          include:[
+            {
+              model: tipo_examen,
+              as: 'tipo_examen', // Especifica el alias 'estado'
+            }
+          ]
         }
       ],
     });
