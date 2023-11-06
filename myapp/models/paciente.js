@@ -14,14 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       const sexo = models.sexo;
       
       paciente.hasMany(orden,{
-        foreignKey: 'id_paciente', // Nombre de la clave externa en el modelo "orden"
-        targetKey: 'id_paciente', // Nombre de la clave en el modelo "estado"
-        as: 'paciente', // Alias para la relación
-        constraints: false,
+        foreignKey:'id_paciente'
       });
-      paciente.belongsTo(obra_social,{
-        foreignKey:'id_obra_social'
+
+      paciente.belongsTo(obra_social, {
+        foreignKey: 'id_obra_social'
       });
+     
       paciente.belongsTo(direccion,{
         foreignKey:'id_direccion'
       });

@@ -10,10 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         const determinacion = models.determinacion;
         
         valor.belongsTo(examen,{
-          foreignKey:'id_examen',
-          targetKey: 'id_examen',
-          as: 'examen-valor', 
-          constraints: false,
+            foreingkey:'id_examen'
         });
           valor.belongsTo(determinacion,{
             foreingkey:'id_determinacion'

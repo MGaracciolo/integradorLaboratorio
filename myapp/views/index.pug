@@ -13,16 +13,18 @@ html(lang='es')
       button#botonInicio.custom-button Inicio
       button#botonBuscarPaciente.custom-button Buscar Paciente
       button#botonAgregarPaciente.custom-button Agregar Paciente
-      button#botonAgregarOrden.custom-button Agregar Orden    
+      button#botonAgregarOrden.custom-button Agregar Orden
       button#botonBuscarOrden.custom-button Buscar Orden
       button#botonExamenes.custom-button Examenes
       button#botonSalir.custom-button Salir
 
-    h1 Búsqueda de Pacientes
-    form(action='/rutaPaciente/buscar', method='GET')
+    h1 Búsqueda 
+    
+
+    form(action='/rutaPaciente/buscar', method='GET', id='formBuscarPaciente')
       p Ingrese nombre, DNI o apellido del paciente:
-      input(style: center, type='text', name='busqueda', id='busquedaPaciente', placeholder='Ingrese el nombre/apellido/DNI del paciente')
-      button(type='submit', id='botonBuscar') Buscar 
+      input(type='text', name='busqueda', id='busquedaPaciente', placeholder='Ingrese el nombre/apellido/DNI del paciente')
+      button(type='submit', id='botonBuscar') Buscar
 
     
 

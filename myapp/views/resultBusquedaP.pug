@@ -1,4 +1,3 @@
-doctype html
 html(lang='es')
   head
     meta(charset='UTF-8')
@@ -13,10 +12,11 @@ html(lang='es')
       button#botonInicio.custom-button Inicio
       button#botonBuscarPaciente.custom-button Buscar Paciente
       button#botonAgregarPaciente.custom-button Agregar Paciente
-      button#botonAgregarOrden.custom-button Agregar Orden    
+      button#botonAgregarOrden.custom-button Agregar Orden
       button#botonBuscarOrden.custom-button Buscar Orden
       button#botonExamenes.custom-button Examenes
       button#botonSalir.custom-button Salir
+          script(src='https://code.jquery.com/jquery-3.6.0.min.js')
 
     h1 Búsqueda de Pacientes
     form(action='/rutaPaciente/buscar', method='GET')
@@ -24,7 +24,7 @@ html(lang='es')
       input(style: center, type='text', name='busqueda', id='busquedaPaciente', placeholder='Ingrese el nombre/apellido/DNI del paciente')
       button(type='submit', id='botonBuscar') Buscar 
 
-    table#tablaResultados
+    table#examenesTable
       h2 Pacientes
       thead
         tr
@@ -40,67 +40,112 @@ html(lang='es')
           th User
           th Acciones
       tbody
+      - if (pacientes && pacientes.length > 0)
         each paciente in pacientes
           tr
             td= paciente.dni
             td= paciente.nombre
             td= paciente.apellido
             td= paciente.fecha_nacimiento
-            td= paciente.obra_social
+            - if (paciente.obra_social)
+              td= paciente.obra_social.nombre
+            - else
+              td= 'Sin obra social'
             td= paciente.numero_afiliado
             td= paciente.telefono
-            td= paciente.id_sexo
-            td= paciente.id_direccion
-            td= paciente.id_user
+            - if (paciente.sexo)
+              td= paciente.sexo.valor
+            - else
+              td= 'Sin sexo'
+            - if (paciente.direccion)
+              td= `${paciente.direccion.calle} ${paciente.direccion.numero}`
+            - else
+              td= 'Sin dirección'
+            - if (paciente.user)
+              td= paciente.user.usuario
+            - else
+              td= 'Sin usuario'
             td
-                button(type='button', class='custom-button editar-button', data-id=paciente.id_paciente) Editar
+              - console.log(`ID del paciente: ${paciente.id_paciente}`);
+              a(href=`/rutaPaciente/editar/${paciente.id_paciente}`) Editar
 
+          script(src='https://code.jquery.com/jquery-3.6.0.min.js')
 
+    each paciente in pacientes
+      #editarPaciente(data-id=paciente.id_paciente)
+      form(action=`/rutaPaciente/actualizarPaciente/${paciente.id_paciente}`, method='POST')
+        p     
+          | DNI:
+          input(type='text', name='dni', placeholder='DNI', value=paciente.dni)
+        p
+          | Nombre:
+          input(type='text', name='nombre', placeholder='Nombre', value=paciente.nombre)
+        p
+          | Apellido:
+          input(type='text', name='apellido', placeholder='Apellido', value=paciente.apellido)
+        p
+          | Fecha de nacimiento:
+          input(type='date', name='fecha_nacimiento', placeholder='Fecha de nacimiento', value=paciente.fecha_nacimiento)
+        p
+          | Obra Social:
+          script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+          select(id='obraSocialSelect', name='nombreObraSocial', onchange='updateNombreObraSocial()')
 
-    //button#guardarCambios Guardar cambios
+          
+       
+              script(src='https://code.jquery.com/jquery-3.6.0.min.js')
 
-  each paciente in pacientes
-    #editarPaciente(data-id=paciente.id)
-    form(action=`/rutaPaciente/actualizarPaciente/${paciente.id}`, method='POST')
-      p     
-        | DNI:
-        input(type='text', name='dni', placeholder='DNI', value=paciente.dni)
-      p
-        | Nombre:
-        input(type='text', name='nombre', placeholder='Nombre', value=paciente.nombre)
-      p
-        | Apellido:
-        input(type='text', name='apellido', placeholder='Apellido', value=paciente.apellido)
-      p
-        | Fecha de nacimiento:
-        input(type='date', name='fecha_nacimiento', placeholder='Fecha de nacimiento', value=paciente.fecha_nacimiento)
-      p
-        | Obra Social:
-        input(type='text', name='id_obra_social', placeholder='Obra Social', value=paciente.id_obra_social)
-      p
-        | Número de afiliado:
-        input(type='text', name='numero_afiliado', placeholder='Número de afiliado', value=paciente.numero_afiliado)
-      p
-        | Teléfono:
-        input(type='text', name='telefono', placeholder='Teléfono', value=paciente.telefono)
-      p
-        | Sexo:
-        input(type='text', name='id_sexo', placeholder='Sexo', value=paciente.id_sexo)
-      p
-        | Direccion:
-        input(type='text', name='id_direccion', placeholder='Direccion', value=paciente.id_direccion)
-      p
-        | User:
-        input(type='text', name='id_user', placeholder='User', value=paciente.id_user)
+              script.
+                $(document).ready(function() {
+                  // Realiza una petición AJAX para obtener las obras sociales disponibles
+                  $.get('/rutaPaciente/obrasSocialesDisponibles', function(data) {
+                    var obraSocialSelect = $('#obraSocialSelect');
+                    obraSocialSelect.empty(); // Limpia las opciones actuales
+
+                    obraSocialSelect.append($('<option>', { // Añade la opción predeterminada
+                      value: '',
+                      text: 'Elija una obra social'
+                    }));
+
+                    $.each(data, function(index, obraSocial) { // Itera sobre las obras sociales en la respuesta
+                      obraSocialSelect.append($('<option>', {
+                        value: obraSocial.id_obra_social,
+                        text: obraSocial.nombre
+                      }));
+                    });
+                  });
+                });
+                
+              script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+
+              
+          
+          p
+            | Número de afiliado:
+            input(type='text', name='numero_afiliado', placeholder='Número de afiliado', value=paciente.numero_afiliado)
+          p
+            | Teléfono:
+            input(type='text', name='telefono', placeholder='Teléfono', value=paciente.telefono)
+          p
+            | Sexo:
+            input(type='text', name='id_sexo', placeholder='Sexo', value=paciente.sexo ? paciente.sexo.valor : '')
+          p
+            | Dirección:
+            input(type='text', name='id_direccion', placeholder='Dirección', value=paciente.direccion ? `${paciente.direccion.calle} ${paciente.direccion.numero}` : '')
+          p
+            | Usuario:
+            input(type='text', name='id_user', placeholder='Usuario', value=paciente.user ? paciente.user.usuario : '')
+          
+          button(type='submit', class='custom-button guardar-button', data-id=paciente.id_paciente) Guardar Cambios
+
       
-      button(type='submit', class='custom-button guardar-button', data-id=paciente.id) Guardar Cambios
-
-      //button(type='submit', class='custom-button guardar-button', data-id=paciente.id) Guardar Cambios
 
 footer#footer
   p Rivadavia 548, San Luis, Argentina
   p Teléfono: 266 4000000
   p Email: labwm@gmail.com
   p &copy; 2023 TreeLabWM
+
 script(src='https://code.jquery.com/jquery-3.6.0.min.js')
 script(src='/javascripts/lab.js')
+

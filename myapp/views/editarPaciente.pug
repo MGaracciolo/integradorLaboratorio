@@ -1,0 +1,51 @@
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Editar Paciente - TreeLabWM
+    link(rel="stylesheet", href="/stylesheets/style.css")
+
+  body
+    #cabecera
+      img(src='/images/banner.png', alt='Logo del laboratorio')
+    h1 Editar Paciente
+    form(action=`/rutaPaciente/editar/${paciente.id_paciente}`, method='POST')
+      input(type='hidden', name='_method', value='PUT') // Para emular el método PUT en un formulario HTML
+      p DNI:
+      input(type='text', name='dni', value=paciente.dni)
+      p Nombre:
+      input(type='text', name='nombre', value=paciente.nombre)
+      p Apellido:
+      input(type='text', name='apellido', value=paciente.apellido)
+      p Fecha de Nacimiento:
+      input(type='date', name='fecha_nacimiento', value=paciente.fecha_nacimiento)
+      p Obra Social:
+      select(name='id_obra_social')
+        each obraSocial in obrasSociales
+          option(value=obraSocial.id_obra_social, selected=(obraSocial.id_obra_social === paciente.id_obra_social))= obraSocial.nombre
+      p Número de Afiliado:
+      input(type='text', name='numero_afiliado', value=paciente.numero_afiliado)
+      p Teléfono:
+      input(type='text', name='telefono', value=paciente.telefono)
+      p Sexo:
+      select(name='id_sexo')
+        each sexo in sexos
+          option(value=sexo.id_sexo, selected=(sexo.id_sexo === paciente.id_sexo))= sexo.valor
+      p Calle:
+      input(type='text', name='calle', value=(paciente.direccion) ? paciente.direccion.calle : '')
+      p Número:
+      input(type='text', name='numero', value=(paciente.direccion) ? paciente.direccion.numero : '')
+      p &nbsp; // Espacio en blanco para separar los campos
+      button(type='submit') Guardar Cambios
+
+    a(href='/rutaPaciente') Volver a la lista de pacientes
+
+footer#footer
+  p Rivadavia 548, San Luis, Argentina
+  p Teléfono: 266 4000000
+  p Email: labwm@gmail.com
+  p &copy; 2023 TreeLabWM
+
+script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+script(src='/javascripts/lab.js')

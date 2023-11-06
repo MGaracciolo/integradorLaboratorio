@@ -60,9 +60,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       tipo_muestra.hasMany(muestra, {
-        foreingkey:'id_tipo_muestra',
-        as: 'tipo_muestra',
-        constraints: false, 
+        foreignKey: 'id_tipo_muestra',
       });
     }
   }

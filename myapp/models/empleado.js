@@ -11,22 +11,13 @@ module.exports = (sequelize, DataTypes) => {
 
 
       empleado.belongsTo(departamento, {
-        foreingkey:'id_departamento',
-        targetKey: 'id_departamento',
-        as: 'empleado-departamento', 
-        constraints: false,
+        foreignKey: 'id_departamento'
       });
       empleado.belongsTo(user, {
-        foreingkey:'id_user',
-        targetKey: 'id_user',
-        as: 'empleado-user', 
-        constraints: false,
+        foreingkey: 'id_user'
       });
       empleado.hasMany(examen, {
-        foreingkey:'id_empleado',
-        targetKey: 'id_empleado',
-        as: 'empleado-examen', 
-        constraints: false,
+        foreingkey: 'id_empleado'
       });
     }
   }

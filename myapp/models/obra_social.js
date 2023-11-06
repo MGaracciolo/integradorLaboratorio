@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       const paciente = models.paciente;
       
       obra_social.hasMany(paciente,{
-        foreingkey:'id_obra_social'
+       foreignKey:'id_obra_social'
       });
     }
   }

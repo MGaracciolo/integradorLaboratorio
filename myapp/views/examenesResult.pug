@@ -2,19 +2,18 @@ doctype html
 html(lang='es')
   head
     meta(charset='UTF-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title Examenes
-    link(rel="stylesheet" href="/stylesheets/style.css")
-    
+    link(rel="stylesheet", href="/stylesheets/style.css")
 
   body
     #cabecera
-      img(src='/images/banner.png' alt='Logo del laboratorio')
+      img(src='/images/banner.png', alt='Logo del laboratorio')
     #botones
       button#botonInicio.custom-button Inicio
       button#botonBuscarPaciente.custom-button Buscar Paciente
       button#botonAgregarPaciente.custom-button Agregar Paciente
-      button#botonAgregarOrden.custom-button Agregar Orden    
+      button#botonAgregarOrden.custom-button Agregar Orden
       button#botonBuscarOrden.custom-button Buscar Orden
       button#botonExamenes.custom-button Examenes
       button#botonSalir.custom-button Salir
@@ -22,40 +21,56 @@ html(lang='es')
     h1 Búsqueda de Exámenes
     form(action='/rutaExamenes/buscarExamenes', method='GET')
       p Ingrese nombre:
-      input(style: center, type='text', name='busqueda')
+      input(style: 'center', type='text', name='busqueda')
       button(type='submit') Buscar
 
-    table#examenesTable
-      thead
-        tr
-          th(data-sort='string') Examen
-          th(data-sort='string') Determinación
-          th(data-sort='num') Edad min-Edad max
-          th(data-sort='num') Valor de Referencia
-          th(data-sort='string') Unidad de Medida
-          th(data-sort='string') sexo
-          th Muestra
-      tbody
-      - if (tipoExamenes && tipoExamenes.length > 0)
-        each tipo_examen in tipoExamenes
-          - if (tipo_examen && tipo_examen.determinacions && tipo_examen.determinacions.length > 0)
-            each determinacion in tipo_examen.determinacions
-              tr
-                td= tipo_examen.descripcion
-                td= determinacion.nombre
-                td= `${determinacion.referencia ? determinacion.referencia.edad_min  + ' - ' + determinacion.referencia.edad_max : ''}`
-                td= `${determinacion.referencia ? determinacion.referencia.minimo + ' - ' + determinacion.referencia.maximo : ''}`
-                td= `${determinacion.unidad_medida ? determinacion.unidad_medida.unidad : ''}`
-                td= `${determinacion.referencia.sexo ? determinacion.referencia.sexo.valor : ''}`
-                td= `${determinacion.tipo_examen.muestras_requeridas.tipo_muestra ? determinacion.tipo_examen.muestras_requeridas.tipo_muestra.valor : ''}`
- 
+    
+
+    
+
+      table#examenesTable
+        thead
+          tr
+            th(data-sort='string') Examen
+            th(data-sort='string') Determinación
+            th(data-sort='num') Edad min-Edad max
+            th(data-sort='num') Valor de Referencia
+            th(data-sort='string') Unidad Medida
+            th(data-sort='string') Sexo
+            th(data-sort='string') Muestras requeridas
+        tbody
+          - if (tipoExamenes && tipoExamenes.length > 0)
+            each tipo_examen in tipoExamenes
+              - if (tipo_examen && tipo_examen.determinacions && tipo_examen.determinacions.length > 0)
+                each determinacion in tipo_examen.determinacions
+                  tr
+                    td= tipo_examen.descripcion
+                    td= determinacion.nombre
+                    td= `${determinacion.referencia ? determinacion.referencia.edad_min + ' - ' + determinacion.referencia.edad_max : ''}`
+                    td= `${determinacion.referencia ? determinacion.referencia.minimo + ' - ' + determinacion.referencia.maximo : ''}`
+                    td= `${determinacion.unidad_medida ? determinacion.unidad_medida.unidad : ''}`
+                    td= `${determinacion.referencia.sexo ? determinacion.referencia.sexo.valor : ''}`
+                    td
+                      - if (tipo_examen.tipo_muestras && tipo_examen.tipo_muestras.length > 0)
+                        each tipo_muestra in tipo_examen.tipo_muestras
+                          span= tipo_muestra.valor
+                          - if (tipo_muestra !== tipo_examen.tipo_muestras[tipo_examen.tipo_muestras.length - 1])
+                            | ,
+                      - else
+                        | No hay muestras requeridas
+
+              - else
+                tr
+                  td= tipo_examen.descripcion
+                  td(colspan=3) No hay determinaciones disponibles
           - else
             tr
-              td= tipo_examen.descripcion
-              td(colspan=3) No hay determinaciones disponibles
-      - else
-        tr
-          td(colspan=4) No se encontraron resultados
+              td(colspan=4) No se encontraron resultados
+
+
+
+
+
 
     h1 Nuevo Examen
     form#formularioNuevoExamen(action='/rutaExamenes/agregarExamen', method='POST')
@@ -79,8 +94,8 @@ html(lang='es')
         | Unidad de Medida:
         select(name='unidadMedida')
         - if (unidadesDeMedida && unidadesDeMedida.length > 0)
-            each unidad in unidadesDeMedida
-              option(value=unidad.id)= unidad.unidad
+          each unidad in unidadesDeMedida
+            option(value=unidad.id)= unidad.unidad
       p
         | Muestras:
         label(for="sangre") Sangre
@@ -91,7 +106,6 @@ html(lang='es')
         input(type="checkbox", name="muestras", value="Materia Fecal")
         label(for="saliva") Saliva
         input(type="checkbox", name="muestras", value="Saliva")
-
       button(type='submit') Crear
 
     footer#footer
