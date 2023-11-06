@@ -12,16 +12,28 @@ module.exports = (sequelize, DataTypes) => {
       const valor = models.valor;
       
       examen.belongsTo(tipo_examen,{
-        foreignKey:'id_tipo'
+        foreignKey: 'id_tipo', 
+        targetKey: 'id_tipo',
+        as: 'tipo-examen', 
+        constraints: false, 
       });
       examen.belongsTo(orden,{
-        foreingkey:'id_orden'
+        foreignKey: 'id_orden', 
+        targetKey: 'id_orden',
+        as: 'orden-examen', 
+        constraints: false, 
       });
       examen.belongsTo(empleado,{
-        foreingkey:'id_empleado'
+        foreingkey:'id_empleado',
+        targetKey: 'id_empleado',
+        as: 'empleado-examen', 
+        constraints: false,
       });
       examen.hasMany(valor,{
-        foreignKey:'id_examen'
+        foreignKey:'id_examen',
+        targetKey: 'id_examen',
+        as: 'examen-valor', 
+        constraints: false,
       });
       }
   }
@@ -39,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'examen',
     tableName: 'examen',
+    timestamps: false
   });
   return examen;
 };

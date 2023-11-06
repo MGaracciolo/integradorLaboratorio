@@ -62,7 +62,7 @@ body {
   width: 270px;
 }
 
-#formularioPaciente {
+#formularioPaciente, #contenedorformularioMuestra {
   justify-content: center;
   align-items: center;
 }
@@ -275,18 +275,27 @@ body {
 
 @media print {
   @page {
-    size: A8 landscape; /* Tamaño de la etiqueta */
+  
+    margin: 10mm; /* Márgenes de 10mm en todos los lados */
   }
-  body{
+  body {
     visibility: hidden;
     margin: 0;
-    padding: 0%;
+    padding: 0;
   }
-  .imprimir{
-    visibility:visible;
-    border: none; /* Elimina el borde */
-    padding: 0; /* Elimina el relleno */
-    margin: 1px; /* Elimina el margen */
+  #formularioMuestra{
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+  }
+  #formularioMuestra .fila{
+    flex-direction: column;
+  }
+  .imprimir {
+    visibility: visible;
+    border: none;
+    padding: 0;
+    margin: 0;
   }
 }
 
@@ -301,7 +310,7 @@ body {
   text-align: center;
 }
 
-#contenedorformularioOrdenes{
+#contenedorformularioOrdenes, #bttnRegistrarMuestra{
   display: none;
 }
 
@@ -315,14 +324,14 @@ body {
 .fila{
   display:flex;
   flex-direction: row;
-
 }
 
 .columna{
   margin: 10px 35px;
 }
+
 .primeraLinea, .segundaLinea {
-  display: flex; /* Utiliza un contenedor flexible para alinear elementos en línea */
+  display: flex;
   justify-content:space-between; /* Centra los elementos horizontalmente */
   margin: 20px 20px; /* Espaciado entre las filas de p */
 }

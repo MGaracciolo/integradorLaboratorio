@@ -3,6 +3,9 @@ const router = express.Router();
 const {orden} = require('../models'); 
 const {estado} = require('../models'); 
 const {paciente} = require('../models'); 
+const {tipo_examen} = require('../models');
+const {empleado} = require('../models'); 
+const {examen}=require('../models');
 
 
 
@@ -20,17 +23,6 @@ router.get('/buscarOrden', async (req, res) => {
           model: paciente,
           as: 'paciente', // Especifica el alias 'estado'
           attributes: ['id_paciente', 'dni', 'nombre', 'apellido']
-        },
-        {
-          model: examen,
-          as: 'examen',
-          include:[
-            {
-              model: tipo_examen,
-              as: 'tipo_examen', // Especifica el alias 'estado'
-              attributes: ['id_tipo','descripcion']
-            }
-          ]
         }
       ],
     });
@@ -72,7 +64,8 @@ router.post('/agregarOrden', async (req, res) => {
       id_paciente,
     });
     if (nuevaOrden) {
-        res.redirect('/rutaOrden/buscarOrden'); 
+      const idOrdenCreada = nuevaOrden.id_orden;
+      res.status(200).json({ mensaje: 'Orden creada con éxito', id_orden: idOrdenCreada });
     }else{
         console.error(error);
         res.status(500).send('Orden no agregada');
@@ -94,19 +87,17 @@ router.get('/agregarOrden', async (req, res) => {
     const estados = await estado.findAll({
       attributes: ['id_estado', 'valor', 'descripcion']
     });
-    const examenes = await examen.findAll({
-      include: [
-        {
-          model: tipo_examen,
-          as: 'tipo_examen',
+    const tipo_examenes = await tipo_examen.findAll({
           attributes: ['id_tipo', 'descripcion']
-        },
-        {
-          model: empleado,
-          as: 'empleado',
-          attributes: ['id_empleado', 'nombre_empleado', 'apellido_empleado']
-        }
-      ]
+    });
+    const empleados = await empleado.findAll({
+      attributes: ['id_empleado', 'nombre', 'apellido']
+    });
+    const examenes = await examen.findAll({
+      attributes: ['id_examen', 'id_tipo', 'id_orden','id_empleado'],
+      include:{
+        
+      }
     });
     if (pacientes.length === 0) {
       res.render('orden', {
@@ -114,7 +105,7 @@ router.get('/agregarOrden', async (req, res) => {
       });
     } else {
       res.render('orden', {
-        pacientes, estados
+        pacientes, estados, tipo_examenes, empleados
       });
     }
   } catch (error) {

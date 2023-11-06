@@ -4,12 +4,13 @@ const {muestra} = require('../models');
 const {tipo_muestra} = require('../models');
 
 router.post('/agregar', async (req, res) => {
+    
     const { 
         fecha_recoleccion,
         hora_recoleccion,
         id_tipo_muestra,
         precedencia,
-        id_orden,
+        id_orden
     } = req.body;
     try {
       const nuevaMuestra = await muestra.create({
@@ -20,7 +21,8 @@ router.post('/agregar', async (req, res) => {
         id_orden,
       });
       if (nuevaMuestra) {
-        res.redirect('/rutaOrden/agregarOrden');
+        const idMuestraCreada = nuevaMuestra.id_muestra;
+        res.status(200).json({ mensaje: 'Muestra creada con éxito', id_muestra: idMuestraCreada  });
       }else{
           console.error(error);
           res.status(500).send('Muestra no agregada');
@@ -34,26 +36,24 @@ router.post('/agregar', async (req, res) => {
     
   }});
 
-  router.get('/buscarMuestra', async (req, res) => {
+  router.get('/buscarMuestra/', async (req, res) => {
     try {
       const tipos_muestra = await tipo_muestra.findAll({
-        attributes: ['id_tipo_muestra', 'valor','descripcion'],
+        attributes: ['id_tipo_muestra', 'valor', 'descripcion']
       });
-      if (tipos_muestra.length === 0) {
-        res.render('/rutaMuestra/agregarr', {
-          noResult: true
-        });
-      } else {
-        res.render('/rutaMuestra/agregar', {
-          tipos_muestra
-        });
-      }
+      if (!tipos_muestra || tipos_muestra.length === 0) {
+        // Manejar el caso en que no se encuentren tipos de muestra (puedes enviar un mensaje de error o un array vacío)
+      res.json( tipos_muestra);
+    } else {
+      // Enviar las unidades de medida y el idO como JSON
+      res.json(tipos_muestra);
+    }
     } catch (error) {
-      console.error('Error al buscar los tipos de muestra:', error);
-      res.status(500).send('Error al buscar los tipos de muestra');
+      console.error('Error al obtener los tipos de muestra: ' + error);
+      res.status(500).json({
+        error: 'Error interno del servidor'
+      });
     }
   });
- 
-     
-
+  
 module.exports = router;

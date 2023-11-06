@@ -2,11 +2,12 @@
 const {
   Model
 } = require('sequelize');
+const tipo_examen = require('./tipo_examen');
 module.exports = (sequelize, DataTypes) => {
   class orden extends Model {
     static associate(models) {
       const paciente = models.paciente;
-      const examen = models.examen;
+      const tipo_examen = models.tipo_examen;
       const estado = models.estado;
       const muestra = models.muestra;
       
@@ -22,11 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'paciente', 
         constraints: false, 
       });
-      orden.hasMany(examen,{
-        foreignKey: 'id_orden', 
-        targetKey: 'id_orden',
-        as: 'orden-examen', 
-        constraints: false, 
+      orden.belongsToMany(tipo_examen,{
+        through: 'examen',
+        foreignKey: 'id_examen',
+        otherKey: 'id_orden',
       });
       orden.hasMany(muestra,{
         foreignKey: 'id_orden', 
