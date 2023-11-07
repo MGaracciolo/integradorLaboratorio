@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       });
       determinacion.belongsTo(tipo_examen, {
         foreignKey: 'id_tipo',
-       
-      })
+        as: 'determinaciones',
+      });
       
     }
   }

@@ -41,8 +41,8 @@ html(lang='es')
         tbody
           - if (tipoExamenes && tipoExamenes.length > 0)
             each tipo_examen in tipoExamenes
-              - if (tipo_examen && tipo_examen.determinacions && tipo_examen.determinacions.length > 0)
-                each determinacion in tipo_examen.determinacions
+              - if (tipo_examen && tipo_examen.determinaciones && tipo_examen.determinaciones.length > 0)
+                each determinacion in tipo_examen.determinaciones
                   tr
                     td= tipo_examen.descripcion
                     td= determinacion.nombre
@@ -72,40 +72,107 @@ html(lang='es')
 
 
 
-    h1 Nuevo Examen
-    form#formularioNuevoExamen(action='/rutaExamenes/agregarExamen', method='POST')
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+
+    h2 Nuevo Examen
+    form#formularioNuevoExamen(action='/rutaExamenes/crearExamenes', method='POST')
       p
         | Nombre del Examen:
         input(type='text', name='nombreExamen', placeholder='Ingrese el nombre del examen')
+      
       p
-        | Determinaciones
+        | Determinaciones:  
+        div#determinaciones-checkboxes
+        script.
+          $(document).ready(function() {
+            $.ajax({
+              url: '/rutaExamenes/determinaciones',
+              method: 'GET',
+              dataType: 'json',
+              success: function(data) {
+                console.log(data);
+                // Crea checkboxes para cada determinación
+                const determinacionesCheckboxes = $('#determinaciones-checkboxes');
+                data.forEach(function(determinacion) {
+                  const checkbox = $('<input>').attr({
+                    type: 'checkbox',
+                    name: 'determinaciones',
+                    value: determinacion.id_determinacion, // Debes usar un valor único, como el ID de la determinación
+                  });
+                  const label = $('<label>').text(determinacion.nombre);
+                  determinacionesCheckboxes.append(checkbox);
+                  determinacionesCheckboxes.append(label);
+                });
+              },
+              error: function(error) {
+                console.error('Error al cargar las determinaciones: ' + error);
+              }
+            });
+          });
+
       p
-        | Nombre de la Determinación
-        input(type='text', name='nombreDeterminacion', placeholder='Ingrese el nombre de la determinación')
+        | Valores de Referencia:
+      p 
+        | sexo 
+        select(name='sexo')
+          option(value='', selected='selected') Selecciona un sexo
+          option(value='1') Masculino
+          option(value='2') Femenino
+          option(value='3') No binario  
+     
+
+     
+      p 
+        | Edad_min
+        select(name='edad_min')
+          option(value='', selected='selected') Selecciona una edad
+          - for (let i = 1; i <= 120; i++)
+            option(value=i) #{i}
+
+      p 
+        | Edad_max
+        select(name='edad_max')
+          option(value='', selected='selected') Selecciona una edad
+          - for (let i = 1; i <= 120; i++)
+            option(value=i) #{i}
       p
-        | Valores de Referencia, según la edad:
-      p
-        | Mínimo
+        | valor mínimo
         input(type='text', name='minimo', placeholder='Ingrese el valor mínimo')
       p
-        | Máximo
+        | valor máximo
         input(type='text', name='maximo', placeholder='Ingrese el valor máximo')
+      
       p
-        | Unidad de Medida:
-        select(name='unidadMedida')
-        - if (unidadesDeMedida && unidadesDeMedida.length > 0)
-          each unidad in unidadesDeMedida
-            option(value=unidad.id)= unidad.unidad
-      p
-        | Muestras:
-        label(for="sangre") Sangre
-        input(type="checkbox", name="muestras", value="Sangre")
-        label(for="orina") Orina
-        input(type="checkbox", name="muestras", value="Orina")
-        label(for="materia_fecal") Materia Fecal
-        input(type="checkbox", name="muestras", value="Materia Fecal")
-        label(for="saliva") Saliva
-        input(type="checkbox", name="muestras", value="Saliva")
+        | Muestras requeridas:
+        div#muestras-requeridas-checkboxes
+        script.
+          $(document).ready(function() {
+            $.ajax({
+              url: '/rutaExamenes/muestrasRequeridas',
+              method: 'GET',
+              dataType: 'json',
+              success: function(data) {
+                console.log(data);
+                // Crea checkboxes para cada muestra requerida
+                const muestrasRequeridasCheckboxes = $('#muestras-requeridas-checkboxes');
+                data.forEach(function(muestra) {
+                  const checkbox = $('<input>').attr({
+                    type: 'checkbox',
+                    name: 'muestras_requeridas',
+                    value: muestra.id_tipo_muestra, // Usamos el ID de la muestra requerida
+                  });
+                  const label = $('<label>').text(muestra.valor); // Mostramos el nombre de la muestra
+                  muestrasRequeridasCheckboxes.append(checkbox);
+                  muestrasRequeridasCheckboxes.append(label);
+                });
+              },
+              error: function(error) {
+                console.error('Error al cargar las muestras requeridas: ' + error);
+              }
+            });
+          });
+
+     
       button(type='submit') Crear
 
     footer#footer

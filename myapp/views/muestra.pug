@@ -58,7 +58,7 @@ html(lang='es')
             .columna
               button#botonAgregarMuestra(type="submit") Guardar
             .columna 
-              button#botonImprimir(type="button" style="display: none") Imprimir
+              button#botonImprimir(type="button" style="display: none") Imprimir Etiqueta
             .columna 
               button#botonVolver(type="button" style="display: none") Volver
 
@@ -104,6 +104,7 @@ script.
             Swal.fire('Muestra creada con éxito');
             $('#botonImprimir').show();
             $('#botonVolver').show();
+            $('#botonAgregarMuestra').hide();
           }
         },
         error: function(error) {

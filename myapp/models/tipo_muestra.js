@@ -46,39 +46,50 @@ module.exports = (sequelize, DataTypes) => {
 */
 
 'use strict';
-const { Model } = require('sequelize');
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class tipo_muestra extends Model {
-    static associate(models) {
-      const muestra = models.muestra;
-      const tipo_examen = models.tipo_examen;
+    class tipo_muestra extends Model {
+      static associate(models) {
+        const muestra = models.muestra;
+        const tipo_examen = models.tipo_examen;
 
-      tipo_muestra.belongsTo(tipo_examen, {
-        foreignKey: 'id_tipo', 
-        as: 'tipo-tipo',
-        constraints: false, 
-      });
+        /*
+              tipo_muestra.belongsToMany(tipo_examen, {
+                through: 'muestras_requeridas',
+                foreignKey: 'id_tipo_muestra',
+                otherKey: 'id_tipo',
+              });
+        */
 
-      tipo_muestra.hasMany(muestra, {
-        foreignKey: 'id_tipo_muestra',
-      });
+
+
+        tipo_muestra.hasMany(tipo_examen, {
+          foreignKey: 'id_tipo_muestra',
+        });
+
+        tipo_muestra.hasMany(muestra, {
+          foreignKey: 'id_tipo_muestra',
+        });
+      }
     }
-  }
-  tipo_muestra.init({
-    id_tipo_muestra: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    id_tipo: DataTypes.INTEGER,
-    valor: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
-  }, {
-    sequelize,
-    modelName: 'tipo_muestra',
-    tableName: 'tipo_muestra',
-    timestamps: false,
-  });
-  return tipo_muestra;
-};
+  
+
+        tipo_muestra.init({
+          id_tipo_muestra: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+          },
+          valor: DataTypes.STRING,
+          descripcion: DataTypes.STRING,
+        }, {
+          sequelize,
+          modelName: 'tipo_muestra',
+          tableName: 'tipo_muestra',
+          timestamps: false,
+        });
+        return tipo_muestra;
+      };

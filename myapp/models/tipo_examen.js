@@ -8,19 +8,28 @@ module.exports = (sequelize, DataTypes) => {
       const tipo_muestra = models.tipo_muestra;
       const examen = models.examen;
       const determinacion = models.determinacion;
-      tipo_examen.hasMany(tipo_muestra, {
-        foreignKey: 'id_tipo', 
-        as: 'tipo-tipo',
-        constraints: false, 
+
+
+      /*
+      tipo_examen.belongsToMany(tipo_muestra, {
+        through: 'muestras_requeridas',
+        foreignKey: 'id_tipo', // Asegúrate de que el nombre de la clave sea correcto
+        otherKey: 'id_tipo_muestra',
+       // as: 'muestrasRequeridas', 
       });
-      tipo_examen.hasMany(examen,{
-        foreignKey: 'id_tipo', 
-        as: 'tipo-examen',
-        constraints: false, 
+*/
+
+      tipo_examen.belongsTo(tipo_muestra, {
+        foreignKey: 'id_tipo_muestra',
+        //as: 'muestrasRequeridas',
+      });
+
+      tipo_examen.hasMany(examen, {
+        foreignKey: 'id_tipo',
       });
       tipo_examen.hasMany(determinacion, {
         foreignKey: 'id_tipo',
-        as: 'determinacions',
+        as: 'determinaciones',
       });
     }
   }
@@ -32,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     descripcion: DataTypes.STRING,
+    id_tipo_muestra: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'tipo_examen',

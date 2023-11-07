@@ -10,11 +10,13 @@ html(lang='es')
     #cabecera
       img(src='/images/banner.png', alt='Logo del laboratorio')
     #botones
-      button#botonAgregarPaciente.custom-button Agregar Paciente
-      button#botonBuscarPaciente.custom-button Buscar Paciente
-      button.custom-button Orden de Trabajo
       button#botonInicio.custom-button Inicio
-      button.custom-button Salir
+      button#botonBuscarPaciente.custom-button Buscar Paciente
+      button#botonAgregarPaciente.custom-button Agregar Paciente
+      button#botonAgregarOrden.custom-button Agregar Orden
+      button#botonBuscarOrden.custom-button Buscar Orden
+      button#botonExamenes.custom-button Examenes
+      button#botonSalir.custom-button Salir
 
     h2 Búsqueda de Exámenes
     form#buscador(action='/rutaExamenes/buscarExamenes', method='GET')
@@ -29,62 +31,63 @@ html(lang='es')
             script(src='https://code.jquery.com/jquery-3.6.0.min.js')
 
     h2 Nuevo Examen
-    form#formularioNuevoExamen(action='/rutaExamenes/crearExamen', method='POST')
+    form#formularioNuevoExamen(action='/rutaExamenes/crearExamenes', method='POST')
       p
         | Nombre del Examen:
         input(type='text', name='nombreExamen', placeholder='Ingrese el nombre del examen')
       
       p
-        | Determinación
-        input(type='text', name='nombreDeterminacion', placeholder='Ingrese el nombre de la determinación')
-
-      p 
-        | sexo 
-        select(name='sexo')
-          option(value='', selected='selected') Selecciona un sexo
-          option(value='Masculino') Masculino
-          option(value='Femenino') Femenino
-          option(value='No binario') No binario  
-      p
-        | Unidad de Medida:
-        
-        select(id='unidadMedidaSelect', name='unidadMedida')
+        | Determinaciones:  
+        div#determinaciones-checkboxes
         script.
           $(document).ready(function() {
-            // Realiza una petición AJAX para obtener las unidades de medida
             $.ajax({
-              url: '/rutaExamenes/unidadMedidaSelect', // Define la ruta en tu servidor
+              url: '/rutaExamenes/determinaciones',
               method: 'GET',
               dataType: 'json',
               success: function(data) {
-                // Llena el select con las unidades de medida
-                data.forEach(function(unidad) {
-                  $('#unidadMedidaSelect').append($('<option>', {
-                    value: unidad.id,
-                    text: unidad.unidad
-                  }));
+                console.log(data);
+                // Crea checkboxes para cada determinación
+                const determinacionesCheckboxes = $('#determinaciones-checkboxes');
+                data.forEach(function(determinacion) {
+                  const checkbox = $('<input>').attr({
+                    type: 'checkbox',
+                    name: 'determinaciones',
+                    value: determinacion.id_determinacion, // Debes usar un valor único, como el ID de la determinación
+                  });
+                  const label = $('<label>').text(determinacion.nombre);
+                  determinacionesCheckboxes.append(checkbox);
+                  determinacionesCheckboxes.append(label);
                 });
               },
               error: function(error) {
-                console.error('Error al cargar las unidades de medida: ' + error);
+                console.error('Error al cargar las determinaciones: ' + error);
               }
             });
           });
 
-      
-
       p
         | Valores de Referencia:
       p 
+        | sexo 
+        select(name='sexo')
+          option(value='', selected='selected') Selecciona un sexo
+          option(value='1') Masculino
+          option(value='2') Femenino
+          option(value='3') No binario  
+     
+
+     
+      p 
         | Edad_min
-        select(name='edad')
+        select(name='edad_min')
           option(value='', selected='selected') Selecciona una edad
           - for (let i = 1; i <= 120; i++)
             option(value=i) #{i}
 
       p 
         | Edad_max
-        select(name='edad')
+        select(name='edad_max')
           option(value='', selected='selected') Selecciona una edad
           - for (let i = 1; i <= 120; i++)
             option(value=i) #{i}
@@ -96,21 +99,35 @@ html(lang='es')
         input(type='text', name='maximo', placeholder='Ingrese el valor máximo')
       
       p
-        | Muestras requeridas:  
-        div
-          label(for="sangre") Sangre
-          input(type="checkbox", name="muestras", value="Sangre")
-        div
-          label(for="orina") Orina
-          input(type="checkbox", name="muestras", value="Orina")
-        div
-          label(for="materia_fecal") Materia Fecal
-          input(type="checkbox", name="muestras", value="Materia Fecal")
-        div
-          label(for="saliva") Saliva
-          input(type="checkbox", name="muestras", value="Saliva")
+        | Muestras requeridas:
+        div#muestras-requeridas-checkboxes
+        script.
+          $(document).ready(function() {
+            $.ajax({
+              url: '/rutaExamenes/muestrasRequeridas',
+              method: 'GET',
+              dataType: 'json',
+              success: function(data) {
+                console.log(data);
+                // Crea checkboxes para cada muestra requerida
+                const muestrasRequeridasCheckboxes = $('#muestras-requeridas-checkboxes');
+                data.forEach(function(muestra) {
+                  const checkbox = $('<input>').attr({
+                    type: 'checkbox',
+                    name: 'muestras_requeridas',
+                    value: muestra.id_tipo_muestra, // Usamos el ID de la muestra requerida
+                  });
+                  const label = $('<label>').text(muestra.valor); // Mostramos el nombre de la muestra
+                  muestrasRequeridasCheckboxes.append(checkbox);
+                  muestrasRequeridasCheckboxes.append(label);
+                });
+              },
+              error: function(error) {
+                console.error('Error al cargar las muestras requeridas: ' + error);
+              }
+            });
+          });
 
-        
      
       button(type='submit') Crear
 
