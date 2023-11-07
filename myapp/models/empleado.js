@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
 
 
       empleado.belongsTo(departamento, {
-        foreignKey: 'id_departamento'
+        foreignKey: 'id_departamento',
+        as: 'departamento-empleado',
+        constraints: false, 
       });
       empleado.belongsTo(user, {
         foreingkey: 'id_user'
       });
       empleado.hasMany(examen, {
-        foreingkey: 'id_empleado'
+        foreingkey: 'id_empleado',
+        as: 'examen-empleado',
+        constraints: false, 
       });
     }
   }
@@ -35,6 +39,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'empleado',
+    tableName: 'empleado',
+    timestamps: false,
   });
   return empleado;
 };

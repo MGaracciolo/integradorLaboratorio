@@ -53,10 +53,10 @@ module.exports = (sequelize, DataTypes) => {
       const muestra = models.muestra;
       const tipo_examen = models.tipo_examen;
 
-      tipo_muestra.belongsToMany(tipo_examen, {
-        through: 'muestras_requeridas',
-        foreignKey: 'id_tipo_muestra',
-        otherKey: 'id_tipo',
+      tipo_muestra.belongsTo(tipo_examen, {
+        foreignKey: 'id_tipo', 
+        as: 'tipo-tipo',
+        constraints: false, 
       });
 
       tipo_muestra.hasMany(muestra, {
@@ -71,6 +71,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
+    id_tipo: DataTypes.INTEGER,
     valor: DataTypes.STRING,
     descripcion: DataTypes.STRING,
   }, {

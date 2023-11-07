@@ -97,14 +97,11 @@ html(lang='es')
                 input(type="text" name="doctor"  placeholder='Ingrese el nombre del doctor' required)
             .fila
               .columna
-                //- form(action="/buscarOrden", method="post")
                 p
                   | Tipo de examen:
                   select(name="id_tipo", required)
                     each tipo_examen in tipo_examenes
                       option(value=tipo_examen.id_tipo)= tipo_examen.descripcion
-              //- .columna 
-              //-   input(type="button", value="Registrar Muestra", data-id-orden=id_orden)
               //-agregar tambien las muestras faltantes
             .fila
               .columna

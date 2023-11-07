@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       const paciente = models.paciente; // Importa el modelo 'paciente' y asócialo.
 
       direccion.hasMany(paciente, {
-        foreignKey: 'id_direccion'
+        foreignKey: 'id_direccion', 
+        targetKey: 'id_direccion',
+        as: 'direccion-paciente', 
+        constraints: false, 
       });
     }
   }

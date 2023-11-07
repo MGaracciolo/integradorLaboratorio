@@ -94,6 +94,7 @@ router.get('/agregarOrden', async (req, res) => {
     //   attributes: ['id_empleado', 'nombre', 'apellido']
     // });
     if (pacientes.length === 0) {
+      
       res.render('orden', {
         noResult: true
       });
@@ -107,6 +108,32 @@ router.get('/agregarOrden', async (req, res) => {
     res.status(500).send('Error al buscar pacientes');
   }
 });
-  
+
+router.get('/buscarEstado/:id', async (req, res) => {
+  try {
+    const ordenId = req.params.id;
+    const estados = await estado.findAll({
+      attributes: ['id_estado', 'valor', 'descripcion']
+    });
+    // const ord = await orden.findByPk(ordenId,{
+    //   include : tipo_examen        
+    // })
+    const ord = await orden.findByPk(ordenId,{
+      include: [
+        {
+          model: examen, // Modelo de la relación
+          as: 'orden-examen', // Alias de la relación
+          attributes:['id_examen','id_tipo']
+        }]
+     })
+     const tipo_examenes = await tipo_examen.findAll({
+      attributes:['id_tipo','descripcion']
+     })
+    res.status(200).json({estados,tipo_examenes,ord}); //
+  } catch (error) {
+    console.error('Error al buscar pacientes:', error);
+    res.status(500).send('Error al buscar pacientes');
+  }
+});
 
 module.exports = router;

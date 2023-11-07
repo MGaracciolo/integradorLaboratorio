@@ -22,12 +22,8 @@ router.post('/agregar', async (req, res) => {
       });
       if (nuevaMuestra) {
         const idMuestraCreada = nuevaMuestra.id_muestra;
-        res.status(200).json({ mensaje: 'Muestra creada con éxito', id_muestra: idMuestraCreada  });
-      }else{
-          console.error(error);
-          res.status(500).send('Muestra no agregada');
+        res.status(200).json({ mensaje: 'Muestra creada con éxito', id_muestra: idMuestraCreada  })
       }
-  
     } catch (error) {
       console.error('Error al agregar muestra: ', error);
       res.status(500).json({

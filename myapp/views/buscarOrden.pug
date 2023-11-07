@@ -22,6 +22,65 @@ html(lang='es')
       button#botonExamenes.custom-button Examenes
       button#botonSalir.custom-button Salir
 
+    //- #contenedorformularioOrdenes
+    //-   form#formularioOrden(action='/rutaOrden/buscarOrden', method='post')
+    //-     #contenedorPacientes
+    //-       h2 Paciente:
+    //-       .fila
+    //-         .columna
+    //-           | ID:
+    //-           input(type="text", id="idPacienteInput", name="id_paciente", readonly)
+    //-     #contenedorOrdenes
+    //-       h2 Orden:
+    //-       .fila
+    //-         p
+    //-           | Id de Orden:
+    //-           input(type="text", name="id_orden", readonly, value="1", id="idOrdenInput")
+    //-       .fila
+    //-         .columna
+    //-           p
+    //-             | Fecha de Ingreso:
+    //-             input(type="date", name="fecha_ingreso", required)
+    //-         .columna
+    //-           p
+    //-             | Fecha de Entrega:
+    //-             input(type="date", name="fecha_entrega")
+    //-       .fila
+    //-         .columna
+    //-           p
+    //-             | Diagnóstico:
+    //-             input(type="text", name="diagnostico" id="inputDiagnostico")
+    //-         .columna
+    //-           p
+    //-             | Solicita:
+    //-             input(type="text", name="doctor", placeholder='Ingrese el nombre del doctor', required)
+    //-       .fila
+    //-         .columna
+    //-               p
+    //-                 | Tipo de Examen:
+    //-                 select(name="id_tipo", id="tipoO" required)
+    //-         .columna
+    //-               p
+    //-                 | Tipo de Examen anteriormente seleccionado:
+    //-                 input(type="text", id="tipoExamen" required)
+    //-         .columna
+    //-           p
+    //-             | Observación:
+    //-             textarea(name="observacion")
+    //-       .fila 
+    //-         .columna 
+    //-             p
+    //-               | Estado de la orden:
+    //-               select(name="id_estado", id="estadoO" required)
+    //-         .columna
+                
+    //-       .fila
+    //-         .columna
+    //-           button#botonAgregarOrden(type="submit") Crear Orden de Trabajo
+    //-         .columna
+    //-           input(type="button", id="bttnRegistrarMuestra", value="Registrar Muestra")
+
+
     table#tablaOrdenes.cell-border.compact.display
       thead
         tr
@@ -52,11 +111,19 @@ html(lang='es')
             td.buscable= orden.paciente.dni
             td.buscable= orden.paciente.nombre
             td.buscable= orden.paciente.apellido
-            td.buscable= orden.activo
+            td.buscable
+              - if (orden.activo) // Comprueba si orden.activo es verdadero
+                | Activo
+              - else
+                | Inactivo
             td
               input(type="button", value="Editar")
-              input(type="button", value="Desactivar")
-              input(type="button", value="Activar")
+              - if (orden.activo) // Comprueba si orden.activo es verdadero
+                input(type="button", value="Desactivar")
+              - else
+                input(type="button", value="Activar")
+              
+              
 
     footer#footer
       p Rivadavia 548, San Luis, Argentina
@@ -66,7 +133,43 @@ html(lang='es')
 
     script(src='/javascripts/lab.js')
     script.
+      //- $(document).ready(function() {
+      //-   let idOrden = $('#idOrdenInput').val();
+      //-   console.log(idOrden + ' id de la orden en el pug')
+      //-   $.ajax({
+      //-     url: '/rutaOrden/buscarEstado/1' ,
+      //-     method: 'GET',
+      //-     dataType: 'json',
+      //-     success: function(data) {
+      //-       console.log(data)
+      //-       $.each(data.estados, function(estados, estado) {
+      //-         $('#estadoO').append($('<option>', {
+      //-           value: estado.id_estado,
+      //-           text: estado.valor
+      //-         }));
+      //-       });
+      //-       $.each(data.tipo_examenes, function(tipo_examenes, tipo_examen) {
+      //-         $('#tipoO').append($('<option>', {
+      //-           value: tipo_examen.id_tipo,
+      //-           text: tipo_examen.descripcion
+      //-         }));
+      //-       });
+      //-     const idTipo = data.ord['orden-examen'][0].id_tipo;
+      //-     const tipoExamenEncontrado = data.tipo_examenes.find(function(tipo_examen) {
+      //-       return tipo_examen.id_tipo === idTipo;
+      //-     });
+      //-     $('#idPacienteInput').val(data.ord.id_paciente);
+      //-     $('#inputDiagnostico').val(tipoExamenEncontrado.descripcion);
+      //-     $('#tipoExamen').val(tipoExamenEncontrado.descripcion);
+      //-     $('#tipoExamen').val(tipoExamenEncontrado.descripcion);
+      //-   },
+      //-   error: function(error) {
+      //-     console.error('Error al cargar los tipos de estado: ' + error);
+      //-   }
+      //-   });
+      //- });
       $(document).ready(function() {
+
           $('#tablaOrdenes').DataTable({
               searching: true,
               language: {
@@ -78,3 +181,4 @@ html(lang='es')
               }]
           });
       });
+

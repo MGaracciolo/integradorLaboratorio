@@ -13,25 +13,22 @@ module.exports = (sequelize, DataTypes) => {
       
       examen.belongsTo(tipo_examen,{
         foreignKey: 'id_tipo', 
-        targetKey: 'id_tipo',
         as: 'tipo-examen', 
         constraints: false, 
       });
       examen.belongsTo(orden,{
         foreignKey: 'id_orden', 
-        targetKey: 'id_orden',
+        targetKey: 'id_orden', 
         as: 'orden-examen', 
         constraints: false, 
       });
       examen.belongsTo(empleado,{
         foreingkey:'id_empleado',
-        targetKey: 'id_empleado',
-        as: 'empleado-examen', 
-        constraints: false,
+        as: 'examen-empleado',
+        constraints: false, 
       });
       examen.hasMany(valor,{
         foreignKey:'id_examen',
-        targetKey: 'id_examen',
         as: 'examen-valor', 
         constraints: false,
       });

@@ -6,10 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class departamento extends Model {
     
     static associate(models) {
-      // Importa el modelo 'empleado' y úsalo para establecer la relación
       const empleado = models.empleado;
       departamento.hasMany(empleado, {
-        foreignKey: 'id_departamento'
+        foreignKey: 'id_departamento',
+        as: 'departamento-empleado',
+        constraints: false, 
       });
     }
   }
@@ -24,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'departamento',
+    tableName: 'departamento',
+    timestamps: false,
   });
   return departamento;
 };
